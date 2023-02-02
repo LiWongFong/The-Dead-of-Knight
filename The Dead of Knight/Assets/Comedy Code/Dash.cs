@@ -10,6 +10,7 @@ public class Dash : MonoBehaviour
 
     private Rigidbody2D body;
     private bool clicked = false;
+    private bool reset = true;
     private Vector2 worldPosition;
     private Vector2 launch;
 
@@ -21,9 +22,10 @@ public class Dash : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0) && reset)
         {
             clicked = true; 
+            reset = false;
             Debug.Log("Pressed left click.");
         }
     }
@@ -42,6 +44,7 @@ public class Dash : MonoBehaviour
 
         if (body.velocity.y == 0.0)
         {
+            reset = true;
             body.velocity = Vector2.zero;
         }
     }
