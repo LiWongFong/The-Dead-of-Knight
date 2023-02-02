@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using ExtensionMethods;
+using UnityEngine.SceneManagement;
 
 public class Dash : MonoBehaviour
 {
@@ -20,6 +21,9 @@ public class Dash : MonoBehaviour
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
+        body.velocity = PlayerManager.pManager.velocity;
+        float yPos = PlayerManager.pManager.top ? -5 : 5;
+        body.MovePosition(new Vector2(PlayerManager.pManager.x, yPos));
         layerMask = 1 << gameObject.layer;
     }
 
@@ -70,5 +74,11 @@ public class Dash : MonoBehaviour
             reset = true;
             body.velocity = Vector2.zero;
         }
+    }
+
+    public void store()
+    {
+        PlayerManager.pManager.velocity = body.velocity;
+        PlayerManager.pManager.x = transform.position.x;
     }
 }
