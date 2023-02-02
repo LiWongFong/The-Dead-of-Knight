@@ -5,13 +5,16 @@ using ExtensionMethods;
 
 public class Dash : MonoBehaviour
 {
-    public float dashDistance = 10f;
-    public float momentum = 5f;
+    public float dashDelta = 4f;
+    public float momentum = 6f;
 
     private Rigidbody2D body;
     private int layerMask;
     private bool clicked = false;
+    private bool jump = false;
     private bool reset = true;
+    private float startTime;
+    private float dashDistance;
 
     // Start is called before the first frame update
     void Start()
@@ -22,21 +25,32 @@ public class Dash : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonUp(0) && reset)
+        if (Input.GetMouseButtonDown(0))
         {
-            clicked = true; 
+            startTime = Time.time;
+            clicked = true;
+        }
+
+        if (((clicked && Time.time - startTime >= 1.0f) || Input.GetMouseButtonUp(0)) && reset)
+        {      
+            dashDistance = (Time.time - startTime) * dashDelta;
+            if (dashDistance > 1.0f*dashDelta) {dashDistance = 1.0f*dashDelta;}
+            jump = true; 
             reset = false;
+            clicked = false;
             Debug.Log("Pressed left click.");
         }
+
+        if (!reset) {startTime = Time.time;}
     }
 
     private void FixedUpdate()
     {
         Vector2 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (clicked) 
+        if (jump) 
         {
-            clicked = false;
-            Vector2 launch = worldPosition - transform.position.AsVector2();
+            jump = false;
+            Vector2 launch = (worldPosition - transform.position.AsVector2());
             launch.Normalize();
             RaycastHit2D hit = Physics2D.Raycast(transform.position.AsVector2(), launch, dashDistance, ~layerMask);
             if (hit.collider == null)
