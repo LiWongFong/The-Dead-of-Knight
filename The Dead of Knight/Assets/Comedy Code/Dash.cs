@@ -9,15 +9,15 @@ public class Dash : MonoBehaviour
     public float momentum = 5f;
 
     private Rigidbody2D body;
+    private int layerMask;
     private bool clicked = false;
     private bool reset = true;
-    private Vector2 worldPosition;
-    private Vector2 launch;
 
     // Start is called before the first frame update
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
+        layerMask = 1 << gameObject.layer;
     }
 
     private void Update()
@@ -32,14 +32,21 @@ public class Dash : MonoBehaviour
 
     private void FixedUpdate()
     {
-        worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         if (clicked) 
         {
             clicked = false;
-            launch = worldPosition - transform.position.AsVector2();
+            Vector2 launch = worldPosition - transform.position.AsVector2();
             launch.Normalize();
-            body.MovePosition(transform.position.AsVector2()+(launch*dashDistance));
-            body.velocity = (launch*momentum);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position.AsVector2(), launch, dashDistance, ~layerMask);
+            if (hit.collider == null)
+            {
+                body.MovePosition(transform.position.AsVector2()+(launch*dashDistance));
+                body.velocity = (launch*momentum);
+            } else
+            {
+                body.velocity = (launch*10);
+            }
         }
 
         if (body.velocity.y == 0.0)
