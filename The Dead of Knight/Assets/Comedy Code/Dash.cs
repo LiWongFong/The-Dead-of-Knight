@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ExtensionMethods;
 
 public class Dash : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class Dash : MonoBehaviour
 
     private Rigidbody2D body;
     private bool clicked = false;
-    private Vector3 worldPosition;
+    private Vector2 worldPosition;
     private Vector2 launch;
 
     // Start is called before the first frame update
@@ -33,10 +34,15 @@ public class Dash : MonoBehaviour
         if (clicked) 
         {
             clicked = false;
-            launch = (worldPosition - transform.position);
+            launch = worldPosition - transform.position.AsVector2();
             launch.Normalize();
-            body.MovePosition(launch*dashDistance);
+            body.MovePosition(transform.position.AsVector2()+(launch*dashDistance));
             body.velocity = (launch*momentum);
+        }
+
+        if (body.velocity.y == 0.0)
+        {
+            body.velocity = Vector2.zero;
         }
     }
 }
