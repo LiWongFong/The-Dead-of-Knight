@@ -59,7 +59,9 @@ public class Dash : MonoBehaviour
                 body.velocity = (launch*momentum);
             } else
             {
-                body.velocity = (launch*10);
+
+                body.MovePosition(transform.position.AsVector2()+(launch*hit.distance));
+                body.velocity = (launch*momentum);
             }
         }
 
