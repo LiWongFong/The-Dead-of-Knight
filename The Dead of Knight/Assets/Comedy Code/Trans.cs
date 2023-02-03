@@ -3,19 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
 public class Trans : MonoBehaviour
 {
-    public string levelName;
-    public Dash d;
+    public string nextScene;
+    public string prevScene;
 
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other) 
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Center") 
         {
-            d.store();
-            PlayerManager.pManager.top = (tag == "Top");
-            SceneManager.LoadScene(levelName, LoadSceneMode.Single);
+            if (!SceneManager.GetSceneByName(nextScene).isLoaded)
+            {
+                TransManager.tManager.Load(nextScene);
+                StartCoroutine(UnloadScene(prevScene));
+            } else
+            {
+                TransManager.tManager.Load(prevScene);
+                StartCoroutine(UnloadScene(nextScene));
+            }
         }
+    }
+
+    IEnumerator UnloadScene(string unload)
+    {
+        yield return new WaitForSeconds(0.005f);
+        TransManager.tManager.Unload(unload);
     }
 }

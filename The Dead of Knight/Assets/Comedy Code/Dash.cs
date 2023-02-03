@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using ExtensionMethods;
-using UnityEngine.SceneManagement;
 
 public class Dash : MonoBehaviour
 {
+    public static Dash Player;
+
     public float dashDelta = 4f;
     public float momentum = 6f;
 
@@ -17,14 +18,23 @@ public class Dash : MonoBehaviour
     private float startTime;
     private float dashDistance;
 
+    private void Awake() {
+        if (Player ==  null)
+        {
+            Player = this;
+            DontDestroyOnLoad(this);
+        } else if (Player != this)
+        {
+            Destroy(gameObject);
+        }    
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
-        body.velocity = PlayerManager.pManager.velocity;
-        float yPos = PlayerManager.pManager.top ? -5 : 5;
-        body.MovePosition(new Vector2(PlayerManager.pManager.x, yPos));
         layerMask = 1 << gameObject.layer;
+        
     }
 
     private void Update()
@@ -63,7 +73,6 @@ public class Dash : MonoBehaviour
                 body.velocity = (launch*momentum);
             } else
             {
-
                 body.MovePosition(transform.position.AsVector2()+(launch*hit.distance));
                 body.velocity = (launch*momentum);
             }
@@ -74,11 +83,5 @@ public class Dash : MonoBehaviour
             reset = true;
             body.velocity = Vector2.zero;
         }
-    }
-
-    public void store()
-    {
-        PlayerManager.pManager.velocity = body.velocity;
-        PlayerManager.pManager.x = transform.position.x;
     }
 }
