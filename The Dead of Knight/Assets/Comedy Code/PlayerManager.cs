@@ -1,24 +1,92 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ExtensionMethods;
 
 public class PlayerManager : MonoBehaviour
 {
-    public static PlayerManager pManager;
+    public static PlayerManager Player;
 
-    public Vector2 velocity;
-    public float x;
-    public bool top;
+    public float dashDelta = 4f;
+    public float momentum = 6f;
 
-    private void Awake()
-    {
-        if (pManager ==  null)
+    private Rigidbody2D body;
+    private int layerMask;
+    private bool clicked = false;
+    private bool jump = false;
+    private bool reset = true;
+    private float startTime;
+    private float dashDistance;
+
+    private void Awake() {
+        if (Player ==  null)
         {
-            pManager = this;
+            Player = this;
             DontDestroyOnLoad(this);
-        } else if (pManager != this)
+        } else if (Player != this)
         {
             Destroy(gameObject);
         }    
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        body = GetComponent<Rigidbody2D>();
+        layerMask = 1 << gameObject.layer;
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            startTime = Time.time;
+            clicked = true;
+        }
+
+        if (((clicked && Time.time - startTime >= 1.0f) || Input.GetMouseButtonUp(0)) && reset)
+        {      
+            dashDistance = (Time.time - startTime) * dashDelta;
+            if (dashDistance > 1.0f*dashDelta) {dashDistance = 1.0f*dashDelta;}
+            jump = true; 
+            reset = false;
+            clicked = false;
+            Debug.Log("Pressed left click.");
+        }
+
+        if (!reset) {startTime = Time.time;}
+    }
+
+    private void FixedUpdate()
+    {
+        Vector2 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        if (jump) 
+        {
+            jump = false;
+            Vector2 launch = (worldPosition - transform.position.AsVector2());
+            launch.Normalize();
+            RaycastHit2D hit = Physics2D.Raycast(transform.position.AsVector2(), launch, dashDistance, ~layerMask);
+            Vector2 blinkEnd;
+            if (hit.collider == null)
+            {
+                blinkEnd = transform.position.AsVector2()+(launch*dashDistance);
+            } else if (hit.collider.tag == "Trans")
+            {
+                blinkEnd = transform.position.AsVector2()+(launch*dashDistance);
+                hit.collider.gameObject.GetComponent<Trans>().Trigger();
+            } else
+            {
+                blinkEnd = transform.position.AsVector2()+(launch*hit.distance);
+            }
+            body.MovePosition(blinkEnd);
+            body.velocity = (launch*momentum);
+        }
+
+        if (body.velocity.y == 0f) {reset = true;}
+    }
+
+    public float getVelocity()
+    {
+        return body.velocity.y;
     }
 }

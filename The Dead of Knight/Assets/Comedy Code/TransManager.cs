@@ -35,19 +35,19 @@ public class TransManager : MonoBehaviour
         }
     }
 
-    public void Unload(int scene)
+    public void Unload(int prevScene)
     {
-        if (SceneManager.GetSceneByBuildIndex(scene).isLoaded)
+        if (SceneManager.GetSceneByBuildIndex(prevScene).isLoaded)
         {
-            SceneManager.UnloadSceneAsync(scene);
+            SceneManager.UnloadSceneAsync(prevScene);
         }
     }
 
-    public void Unload(string scene)
+    public void Unload(string prevScene)
     {
-        if (SceneManager.GetSceneByName(scene).isLoaded)
+        if (SceneManager.GetSceneByName(prevScene).isLoaded)
         {
-            SceneManager.UnloadSceneAsync(scene);
+            SceneManager.UnloadSceneAsync(prevScene);
         }
     }
 }

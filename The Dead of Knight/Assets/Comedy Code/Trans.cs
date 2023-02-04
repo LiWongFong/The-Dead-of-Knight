@@ -8,25 +8,47 @@ public class Trans : MonoBehaviour
     public string nextScene;
     public string prevScene;
 
+    private bool falling = false;
+
     private void OnTriggerEnter2D(Collider2D other) 
     {
-        if (other.gameObject.tag == "Center") 
+        if (other.tag == "Player") 
         {
-            if (!SceneManager.GetSceneByName(nextScene).isLoaded)
+            Trigger();
+            if (PlayerManager.Player.getVelocity() < 0f) {falling = true;}
+            else {falling = false;}
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.tag == "Player") 
+        {
+            if (PlayerManager.Player.getVelocity() < 0f && !falling)
             {
-                TransManager.tManager.Load(nextScene);
-                StartCoroutine(UnloadScene(prevScene));
-            } else
-            {
-                TransManager.tManager.Load(prevScene);
-                StartCoroutine(UnloadScene(nextScene));
+                Trigger();
+                Debug.Log("Trigger");
             }
+            Debug.Log("Exit");
+        }
+    }
+
+    public void Trigger()
+    {
+        if (!SceneManager.GetSceneByName(nextScene).isLoaded)
+        {
+            TransManager.tManager.Load(nextScene);
+            StartCoroutine(UnloadScene(prevScene));
+        } else
+        {
+            TransManager.tManager.Load(prevScene);
+            StartCoroutine(UnloadScene(nextScene));
         }
     }
 
     IEnumerator UnloadScene(string unload)
     {
-        yield return new WaitForSeconds(0.005f);
+        yield return new WaitForSeconds(0.006f);
         TransManager.tManager.Unload(unload);
     }
 }

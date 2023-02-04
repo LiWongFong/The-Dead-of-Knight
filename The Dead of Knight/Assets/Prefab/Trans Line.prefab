@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 7293888052749301353}
   - component: {fileID: 2271335629139231534}
   - component: {fileID: 5861709234277836801}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Trans Line
-  m_TagString: Untagged
+  m_TagString: Trans
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6925994927786762687}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5, z: -0.057539202}
+  m_LocalPosition: {x: 0, y: 5, z: 0}
   m_LocalScale: {x: 18, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -67,4 +67,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de7b38a50f3b3374194280f89fbf7124, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LoadNext: 0
+  nextScene: 
+  prevScene: 
