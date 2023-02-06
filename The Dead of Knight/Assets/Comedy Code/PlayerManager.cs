@@ -18,6 +18,11 @@ public class PlayerManager : MonoBehaviour
     private float startTime;
     private float dashDistance;
 
+    private Animator anim;
+    private float prevX = 0f;
+
+    private TrailRenderer trail;
+
     private void Awake() {
         if (Player ==  null)
         {
@@ -32,7 +37,9 @@ public class PlayerManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        anim = GetComponent<Animator>();
         body = GetComponent<Rigidbody2D>();
+        trail = GetComponent<TrailRenderer>();
         layerMask = 1 << gameObject.layer;
     }
 
@@ -63,6 +70,7 @@ public class PlayerManager : MonoBehaviour
         if (jump) 
         {
             jump = false;
+            trail.emitting = true;
             Vector2 launch = (worldPosition - transform.position.AsVector2());
             launch.Normalize();
             RaycastHit2D hit = Physics2D.Raycast(transform.position.AsVector2(), launch, dashDistance, ~layerMask);
@@ -79,10 +87,15 @@ public class PlayerManager : MonoBehaviour
                 blinkEnd = transform.position.AsVector2()+(launch*hit.distance);
             }
             body.MovePosition(blinkEnd);
+            trail.emitting = false;
             body.velocity = (launch*momentum);
         }
 
         if (body.velocity.y == 0f) {reset = true;}
+
+        if (transform.position.x - prevX > 0f) {anim.SetFloat("AniHorizontal", 1);}
+        else if (transform.position.x - prevX < 0f) {anim.SetFloat("AniHorizontal", -1);}
+        prevX = transform.position.x;
     }
 
     public float getVelocity()

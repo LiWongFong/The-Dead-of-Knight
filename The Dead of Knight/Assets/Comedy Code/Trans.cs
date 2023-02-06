@@ -7,9 +7,10 @@ public class Trans : MonoBehaviour
 {
     public string nextScene;
     public string prevScene;
+    public bool Horizontal = false;
 
     private bool falling = false;
-
+    
     private void OnTriggerEnter2D(Collider2D other) 
     {
         if (other.tag == "Player") 
@@ -22,7 +23,7 @@ public class Trans : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.tag == "Player") 
+        if (other.tag == "Player" && !Horizontal) 
         {
             if (PlayerManager.Player.getVelocity() < 0f && !falling)
             {
