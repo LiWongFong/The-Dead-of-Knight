@@ -21,7 +21,8 @@ public class PlayerManager : MonoBehaviour
     private Animator anim;
     private float prevX = 0f;
 
-    private TrailRenderer trail;
+    private LineRenderer line;
+    private Vector3[] points = new Vector3[2];
 
     private void Awake() {
         if (Player ==  null)
@@ -39,7 +40,7 @@ public class PlayerManager : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         body = GetComponent<Rigidbody2D>();
-        trail = GetComponent<TrailRenderer>();
+        line = GetComponent<LineRenderer>();
         layerMask = 1 << gameObject.layer;
     }
 
@@ -70,7 +71,7 @@ public class PlayerManager : MonoBehaviour
         if (jump) 
         {
             jump = false;
-            trail.emitting = true;
+            StartCoroutine(dLine());
             Vector2 launch = (worldPosition - transform.position.AsVector2());
             launch.Normalize();
             RaycastHit2D hit = Physics2D.Raycast(transform.position.AsVector2(), launch, dashDistance, ~layerMask);
@@ -87,7 +88,6 @@ public class PlayerManager : MonoBehaviour
                 blinkEnd = transform.position.AsVector2()+(launch*hit.distance);
             }
             body.MovePosition(blinkEnd);
-            trail.emitting = false;
             body.velocity = (launch*momentum);
         }
 
@@ -96,6 +96,14 @@ public class PlayerManager : MonoBehaviour
         if (transform.position.x - prevX > 0f) {anim.SetFloat("AniHorizontal", 1);}
         else if (transform.position.x - prevX < 0f) {anim.SetFloat("AniHorizontal", -1);}
         prevX = transform.position.x;
+    }
+
+    IEnumerator dLine()
+    {
+        points[0] = transform.position;
+        yield return null;
+        points[1] = transform.position;
+        line.SetPositions(points);
     }
 
     public float getVelocity()
