@@ -21,8 +21,7 @@ public class PlayerManager : MonoBehaviour
     private Animator anim;
     private float prevX = 0f;
 
-    private LineRenderer line;
-    private Vector3[] points = new Vector3[2];
+    private TrailRenderer trail;
 
     private void Awake() {
         if (Player ==  null)
@@ -40,7 +39,7 @@ public class PlayerManager : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         body = GetComponent<Rigidbody2D>();
-        line = GetComponent<LineRenderer>();
+        trail = GetComponent<TrailRenderer>();
         layerMask = 1 << gameObject.layer;
     }
 
@@ -100,10 +99,9 @@ public class PlayerManager : MonoBehaviour
 
     IEnumerator dLine()
     {
-        points[0] = transform.position;
+        trail.emitting = true;
         yield return null;
-        points[1] = transform.position;
-        line.SetPositions(points);
+        trail.emitting = false;
     }
 
     public float getVelocity()
