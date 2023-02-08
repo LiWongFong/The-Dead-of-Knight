@@ -23,6 +23,8 @@ public class PlayerManager : MonoBehaviour
 
     private TrailRenderer _trail;
 
+    private Indicator _indi;
+
     private void Awake() {
         if (Player ==  null)
         {
@@ -40,11 +42,18 @@ public class PlayerManager : MonoBehaviour
         _anim = GetComponent<Animator>();
         _body = GetComponent<Rigidbody2D>();
         _trail = GetComponent<TrailRenderer>();
+        _indi = GameObject.Find("Image").GetComponent<Indicator>();
         _layermask = 1 << gameObject.layer;
     }
 
     private void Update()
     {
+        Vector2 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        var direction = (worldPosition - transform.position.AsVector2());
+        direction.Normalize();
+        Vector3 direct3 = direction;
+        _indi.MoveToClickPoint(transform.position + (direct3 * 1.0f));
+
         if (Input.GetMouseButtonDown(0))
         {
             _startTime = Time.time;
