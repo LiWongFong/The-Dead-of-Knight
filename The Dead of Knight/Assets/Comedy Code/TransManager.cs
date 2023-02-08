@@ -19,35 +19,35 @@ public class TransManager : MonoBehaviour
         }    
     }
 
-    public void Load(int nextScene)
+    public void Load(int _nextScene)
     {
-        if (!SceneManager.GetSceneByBuildIndex(nextScene).isLoaded)
+        if (!SceneManager.GetSceneByBuildIndex(_nextScene).isLoaded)
         {
-            SceneManager.LoadSceneAsync(nextScene, LoadSceneMode.Additive);
+            SceneManager.LoadSceneAsync(_nextScene, LoadSceneMode.Additive);
         }
     }
 
-    public void Load(string nextScene)
+    public void Load(string _nextScene)
     {
-        if (!SceneManager.GetSceneByName(nextScene).isLoaded)
+        if (!SceneManager.GetSceneByName(_nextScene).isLoaded)
         {
-            SceneManager.LoadSceneAsync(nextScene, LoadSceneMode.Additive);
+            SceneManager.LoadSceneAsync(_nextScene, LoadSceneMode.Additive);
         }
     }
 
-    public void Unload(int prevScene)
+    public void Unload(int _prevScene)
     {
-        if (SceneManager.GetSceneByBuildIndex(prevScene).isLoaded)
+        if (SceneManager.GetSceneByBuildIndex(_prevScene).isLoaded)
         {
-            SceneManager.UnloadSceneAsync(prevScene);
+            SceneManager.UnloadSceneAsync(_prevScene);
         }
     }
 
-    public void Unload(string prevScene)
+    public void Unload(string _prevScene)
     {
-        if (SceneManager.GetSceneByName(prevScene).isLoaded)
+        if (SceneManager.GetSceneByName(_prevScene).isLoaded)
         {
-            SceneManager.UnloadSceneAsync(prevScene);
+            SceneManager.UnloadSceneAsync(_prevScene);
         }
     }
 }

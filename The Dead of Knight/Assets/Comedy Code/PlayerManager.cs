@@ -7,21 +7,21 @@ public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Player;
 
-    public float dashDelta = 4f;
-    public float momentum = 6f;
+    public float DashDelta = 4f;
+    public float Momentum = 6f;
 
-    private Rigidbody2D body;
-    private int layerMask;
-    private bool clicked = false;
-    private bool jump = false;
-    private bool reset = true;
-    private float startTime;
-    private float dashDistance;
+    private Rigidbody2D _body;
+    private int _layermask;
+    private bool _clicked = false;
+    private bool _jump = false;
+    private bool _reset = true;
+    private float _startTime;
+    private float _dashDistance;
 
-    private Animator anim;
-    private float prevX = 0f;
+    private Animator _anim;
+    private float _prevX = 0f;
 
-    private TrailRenderer trail;
+    private TrailRenderer _trail;
 
     private void Awake() {
         if (Player ==  null)
@@ -37,75 +37,75 @@ public class PlayerManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        anim = GetComponent<Animator>();
-        body = GetComponent<Rigidbody2D>();
-        trail = GetComponent<TrailRenderer>();
-        layerMask = 1 << gameObject.layer;
+        _anim = GetComponent<Animator>();
+        _body = GetComponent<Rigidbody2D>();
+        _trail = GetComponent<TrailRenderer>();
+        _layermask = 1 << gameObject.layer;
     }
 
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            startTime = Time.time;
-            clicked = true;
+            _startTime = Time.time;
+            _clicked = true;
         }
 
-        if (((clicked && Time.time - startTime >= 1.0f) || Input.GetMouseButtonUp(0)) && reset)
+        if (((_clicked && Time.time - _startTime >= 1.0f) || Input.GetMouseButtonUp(0)) && _reset)
         {      
-            dashDistance = (Time.time - startTime) * dashDelta;
-            if (dashDistance > 1.0f*dashDelta) {dashDistance = 1.0f*dashDelta;}
-            jump = true; 
-            reset = false;
-            clicked = false;
+            _dashDistance = (Time.time - _startTime) * DashDelta;
+            if (_dashDistance > 1.0f*DashDelta) {_dashDistance = 1.0f*DashDelta;}
+            _jump = true; 
+            _reset = false;
+            _clicked = false;
             Debug.Log("Pressed left click.");
         }
 
-        if (!reset) {startTime = Time.time;}
+        if (!_reset) {_startTime = Time.time;}
     }
 
     private void FixedUpdate()
     {
         Vector2 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (jump) 
+        if (_jump) 
         {
-            jump = false;
+            _jump = false;
             StartCoroutine(dLine());
             Vector2 launch = (worldPosition - transform.position.AsVector2());
             launch.Normalize();
-            RaycastHit2D hit = Physics2D.Raycast(transform.position.AsVector2(), launch, dashDistance, ~layerMask);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position.AsVector2(), launch, _dashDistance, ~_layermask);
             Vector2 blinkEnd;
             if (hit.collider == null)
             {
-                blinkEnd = transform.position.AsVector2()+(launch*dashDistance);
+                blinkEnd = transform.position.AsVector2()+(launch*_dashDistance);
             } else if (hit.collider.tag == "Trans")
             {
-                blinkEnd = transform.position.AsVector2()+(launch*dashDistance);
+                blinkEnd = transform.position.AsVector2()+(launch*_dashDistance);
                 hit.collider.gameObject.GetComponent<Trans>().Trigger();
             } else
             {
                 blinkEnd = transform.position.AsVector2()+(launch*hit.distance);
             }
-            body.MovePosition(blinkEnd);
-            body.velocity = (launch*momentum);
+            _body.MovePosition(blinkEnd);
+            _body.velocity = (launch*Momentum);
         }
 
-        if (body.velocity.y == 0f) {reset = true;}
+        if (_body.velocity.y == 0f) {_reset = true;}
 
-        if (transform.position.x - prevX > 0f) {anim.SetFloat("AniHorizontal", 1);}
-        else if (transform.position.x - prevX < 0f) {anim.SetFloat("AniHorizontal", -1);}
-        prevX = transform.position.x;
+        if (transform.position.x - _prevX > 0f) {_anim.SetFloat("AniHorizontal", 1);}
+        else if (transform.position.x - _prevX < 0f) {_anim.SetFloat("AniHorizontal", -1);}
+        _prevX = transform.position.x;
     }
 
     IEnumerator dLine()
     {
-        trail.emitting = true;
+        _trail.emitting = true;
         yield return null;
-        trail.emitting = false;
+        _trail.emitting = false;
     }
 
     public float getVelocity()
     {
-        return body.velocity.y;
+        return _body.velocity.y;
     }
 }
