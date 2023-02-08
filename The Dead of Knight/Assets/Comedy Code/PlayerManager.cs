@@ -25,6 +25,8 @@ public class PlayerManager : MonoBehaviour
 
     private Indicator _indi;
 
+    private GameObject _sword;
+
     private void Awake() {
         if (Player ==  null)
         {
@@ -43,6 +45,7 @@ public class PlayerManager : MonoBehaviour
         _body = GetComponent<Rigidbody2D>();
         _trail = GetComponent<TrailRenderer>();
         _indi = GameObject.Find("Image").GetComponent<Indicator>();
+        _sword = transform.GetChild(0).gameObject;
         _layermask = 1 << gameObject.layer;
     }
 
@@ -67,8 +70,20 @@ public class PlayerManager : MonoBehaviour
             _jump = true; 
             _reset = false;
             _clicked = false;
+            _anim.SetBool("Charging",false);
+            _sword.SetActive(false);
             Debug.Log("Pressed left click.");
         }
+
+        if (_reset && _clicked)
+        {
+        _anim.SetBool("Charging",true);
+        _sword.SetActive(true);
+        }
+
+        _sword.transform.up = -1*(worldPosition - _sword.transform.position.AsVector2()).Rotate(45);
+
+        if (_clicked) {_anim.SetFloat("Facing",direct3.x);}
 
         if (!_reset) {_startTime = Time.time;}
     }

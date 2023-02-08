@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 17be8eeb2dfd0b74dbe41182b75c2d18
+guid: 3a4e5883d43ea794d93c7f2990f35280
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,7 +43,7 @@ TextureImporter:
   lightmap: 0
   compressionQuality: 50
   spriteMode: 2
-  spriteExtrude: 1
+  spriteExtrude: 31
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
@@ -116,13 +116,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MC_SliceHold-Sheet_0
+      name: MC_SliceHold-Sheet - Copy_0
       rect:
         serializedVersion: 2
         x: 7
         y: 0
         width: 18
-        height: 32
+        height: 31
       alignment: 9
       pivot: {x: 0.5, y: 0.25}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -130,14 +130,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e2b20bc3ff885104fb5a13c95ff48234
-      internalID: -1144589481
+      spriteID: 73ec6fd34b1ba7e45be0b6187597113d
+      internalID: -1632521383
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MC_SliceHold-Sheet_1
+      name: MC_SliceHold-Sheet - Copy_1
       rect:
         serializedVersion: 2
         x: 39
@@ -151,8 +151,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ac8594bf7783cc64ab9de70c164f707c
-      internalID: 965257710
+      spriteID: 009d220b1b003794ab8ad7961981315f
+      internalID: -1201116406
       vertices: []
       indices: 
       edges: []
@@ -168,8 +168,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      MC_SliceHold-Sheet_1: 965257710
-      MC_SliceHold-Sheet_0: -1144589481
+      MC_SliceHold-Sheet - Copy_1: -1201116406
+      MC_SliceHold-Sheet - Copy_0: -1632521383
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
