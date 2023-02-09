@@ -7,7 +7,8 @@ public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Player;
 
-    public float DashDelta = 4f;
+    public float MaxChargeTime = 1f;
+    public float MaxDashDistance = 4f;
     public float Momentum = 6f;
 
     private Rigidbody2D _body;
@@ -19,7 +20,6 @@ public class PlayerManager : MonoBehaviour
     private float _dashDistance;
 
     private Animator _anim;
-    private float _prevX = 0f;
 
     private TrailRenderer _trail;
 
@@ -63,22 +63,27 @@ public class PlayerManager : MonoBehaviour
             _clicked = true;
         }
 
-        if (((_clicked && Time.time - _startTime >= 1.0f) || Input.GetMouseButtonUp(0)) && _reset)
+        if (((_clicked && Time.time - _startTime >= MaxChargeTime) || Input.GetMouseButtonUp(0)) && _reset)
         {      
-            _dashDistance = (Time.time - _startTime) * DashDelta;
-            if (_dashDistance > 1.0f*DashDelta) {_dashDistance = 1.0f*DashDelta;}
+            _dashDistance = (Time.time - _startTime) * (MaxDashDistance/MaxChargeTime);
+            if (_dashDistance > MaxDashDistance) {_dashDistance = MaxDashDistance;}
             _jump = true; 
             _reset = false;
             _clicked = false;
-            _anim.SetBool("Charging",false);
+            _anim.ResetTrigger("Charging");
+            _anim.SetTrigger("Dash");
             _sword.SetActive(false);
+            _sword.GetComponent<Animator>().ResetTrigger("Shine");
+            _sword.GetComponent<Animator>().SetTrigger("Shine end");
             Debug.Log("Pressed left click.");
         }
 
-        if (_reset && _clicked)
+        if (_clicked && _reset)
         {
-        _anim.SetBool("Charging",true);
+        _anim.SetTrigger("Charging");
         _sword.SetActive(true);
+        _sword.GetComponent<Animator>().ResetTrigger("Shine end");
+        _sword.GetComponent<Animator>().SetTrigger("Shine");
         }
 
         _sword.transform.up = -1*(worldPosition - _sword.transform.position.AsVector2()).Rotate(45);
@@ -115,10 +120,6 @@ public class PlayerManager : MonoBehaviour
         }
 
         if (_body.velocity.y == 0f) {_reset = true;}
-
-        if (transform.position.x - _prevX > 0f) {_anim.SetFloat("AniHorizontal", 1);}
-        else if (transform.position.x - _prevX < 0f) {_anim.SetFloat("AniHorizontal", -1);}
-        _prevX = transform.position.x;
     }
 
     IEnumerator dLine()
