@@ -18,6 +18,7 @@ public class PlayerManager : MonoBehaviour
     private bool _reset = true;
     private float _startTime;
     private float _dashDistance;
+    private bool _stuck = false;
 
     private Animator _anim;
 
@@ -63,24 +64,28 @@ public class PlayerManager : MonoBehaviour
             _clicked = true;
         }
 
-        if (((_clicked && Time.time - _startTime >= MaxChargeTime) || Input.GetMouseButtonUp(0)) && _reset)
+        if (((Time.time - _startTime >= MaxChargeTime) || Input.GetMouseButtonUp(0)) && _reset && _clicked)
         {      
             _dashDistance = (Time.time - _startTime) * (MaxDashDistance/MaxChargeTime);
             if (_dashDistance > MaxDashDistance) {_dashDistance = MaxDashDistance;}
             _jump = true; 
             _reset = false;
             _clicked = false;
+
             _anim.ResetTrigger("Charging");
             _anim.SetTrigger("Dash");
+
             _sword.SetActive(false);
             _sword.GetComponent<Animator>().ResetTrigger("Shine");
             _sword.GetComponent<Animator>().SetTrigger("Shine end");
+
             Debug.Log("Pressed left click.");
         }
 
         if (_clicked && _reset)
         {
         _anim.SetTrigger("Charging");
+
         _sword.SetActive(true);
         _sword.GetComponent<Animator>().ResetTrigger("Shine end");
         _sword.GetComponent<Animator>().SetTrigger("Shine");
@@ -107,19 +112,59 @@ public class PlayerManager : MonoBehaviour
             if (hit.collider == null)
             {
                 blinkEnd = transform.position.AsVector2()+(launch*_dashDistance);
-            } else if (hit.collider.tag == "Trans")
-            {
-                blinkEnd = transform.position.AsVector2()+(launch*_dashDistance);
-                hit.collider.gameObject.GetComponent<Trans>().Trigger();
             } else
             {
-                blinkEnd = transform.position.AsVector2()+(launch*hit.distance);
+                switch (hit.collider.tag)
+                {
+                    case "Trans":
+                        blinkEnd = transform.position.AsVector2()+(launch*hit.distance);
+                        StartCoroutine(trans(launch, _dashDistance - hit.distance));
+                        _stuck = true;
+                        break;
+                    case "Wall":
+                        blinkEnd = transform.position.AsVector2()+(launch*hit.distance);
+                        _stuck = true;
+                        StartCoroutine(stick(launch));
+                        break;
+                    default:
+                        blinkEnd = transform.position.AsVector2()+(launch*hit.distance);
+                        break;
+                }
             }
+            
             _body.MovePosition(blinkEnd);
             _body.velocity = (launch*Momentum);
         }
 
-        if (_body.velocity.y == 0f) {_reset = true;}
+        if (_body.velocity.y == 0f && !_stuck)
+        {
+            _reset = true;
+            //Debug.Log("Reset");
+        }
+    }
+
+    IEnumerator stick(Vector2 launch)
+    {
+        yield return null;
+        Debug.Log("Stuck");
+        _body.constraints = RigidbodyConstraints2D.FreezeAll;
+        yield return new WaitForSeconds(0.5f);
+        _body.constraints = RigidbodyConstraints2D.FreezeRotation;
+        _body.velocity = (new Vector2(launch.x*-1,launch.y))*Momentum;
+        yield return null;
+        _stuck = false;
+    }
+
+    IEnumerator trans(Vector2 launch, float _distance)
+    {
+        yield return null;
+        _body.constraints = RigidbodyConstraints2D.FreezeAll;
+        yield return new WaitForSeconds(2f);
+        _body.constraints = RigidbodyConstraints2D.FreezeRotation;
+        _body.MovePosition(transform.position.AsVector2()+(launch*_distance));
+        _body.velocity = (launch*Momentum);
+        yield return null;
+        _stuck = false;
     }
 
     IEnumerator dLine()

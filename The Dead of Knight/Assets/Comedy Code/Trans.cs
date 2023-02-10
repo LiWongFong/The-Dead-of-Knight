@@ -16,7 +16,8 @@ public class Trans : MonoBehaviour
         if (_other.tag == "Player") 
         {
             Trigger();
-            if (PlayerManager.Player.getVelocity() < 0f) {_falling = true;}
+            Debug.Log("Trigger");
+            if (PlayerManager.Player.getVelocity() <= 0f) {_falling = true;}
             else {_falling = false;}
         }
     }
@@ -25,7 +26,7 @@ public class Trans : MonoBehaviour
     {
         if (_other.tag == "Player" && !Horizontal) 
         {
-            if (PlayerManager.Player.getVelocity() < 0f && !_falling)
+            if (PlayerManager.Player.getVelocity() <= 0f && !_falling)
             {
                 Trigger();
                 Debug.Log("Trigger");
@@ -49,7 +50,8 @@ public class Trans : MonoBehaviour
 
     IEnumerator UnloadScene(string unload)
     {
-        yield return new WaitForSeconds(0.006f);
+        //yield return new WaitForSeconds(0.006f);
+        yield return null;
         TransManager.tManager.Unload(unload);
     }
 }

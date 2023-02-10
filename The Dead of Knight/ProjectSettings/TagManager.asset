@@ -9,6 +9,7 @@ TagManager:
   - Bot
   - Center
   - Trans
+  - Wall
   layers:
   - Default
   - TransparentFX

@@ -47,6 +47,7 @@ public class TransManager : MonoBehaviour
     {
         if (SceneManager.GetSceneByName(_prevScene).isLoaded)
         {
+            Debug.Log("Unload");
             SceneManager.UnloadSceneAsync(_prevScene);
         }
     }
