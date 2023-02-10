@@ -74,6 +74,7 @@ public class PlayerManager : MonoBehaviour
 
             _anim.ResetTrigger("Charging");
             _anim.SetTrigger("Dash");
+            _anim.ResetTrigger("Ground");
 
             _sword.SetActive(false);
             _sword.GetComponent<Animator>().ResetTrigger("Shine");
@@ -139,6 +140,8 @@ public class PlayerManager : MonoBehaviour
         if (_body.velocity.y == 0f && !_stuck)
         {
             _reset = true;
+            _anim.SetTrigger("Ground");
+            _anim.ResetTrigger("Dash");
             //Debug.Log("Reset");
         }
     }
