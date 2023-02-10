@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Canvas : MonoBehaviour
+public class CanvasManager : MonoBehaviour
 {
-    public static Canvas canvas_;
+    public static CanvasManager cManager;
 
     private void Awake() {
-        if (canvas_ ==  null)
+        if (cManager ==  null)
         {
-            canvas_ = this;
+            cManager = this;
             DontDestroyOnLoad(this);
-        } else if (canvas_ != this)
+        } else if (cManager != this)
         {
             Destroy(gameObject);
         }    
