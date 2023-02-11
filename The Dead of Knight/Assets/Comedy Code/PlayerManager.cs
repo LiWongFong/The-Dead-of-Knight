@@ -47,7 +47,9 @@ public class PlayerManager : MonoBehaviour
         _trail = GetComponent<TrailRenderer>();
         _indi = GameObject.Find("Image").GetComponent<Indicator>();
         _sword = transform.GetChild(0).gameObject;
-        _layermask = 1 << gameObject.layer;
+        int playerLayer = 1 << gameObject.layer;
+        int defaultLayer = 1 << 2;
+        _layermask = defaultLayer ^ playerLayer;
     }
 
     private void Update()
@@ -180,5 +182,10 @@ public class PlayerManager : MonoBehaviour
     public float getVelocity()
     {
         return _body.velocity.y;
+    }
+
+    public void setGravity(float gravity)
+    {
+        _body.gravityScale = gravity;
     }
 }
