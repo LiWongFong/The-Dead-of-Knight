@@ -42,7 +42,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Effects
   m_SortingLayers:
   - name: Default
     uniqueID: 0
@@ -61,4 +61,7 @@ TagManager:
     locked: 0
   - name: Front
     uniqueID: 3835223753
+    locked: 0
+  - name: Effects
+    uniqueID: 1774962969
     locked: 0
