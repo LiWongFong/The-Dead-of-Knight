@@ -51,14 +51,14 @@ Material:
     m_Ints: []
     m_Floats:
     - _EnableExternalAlpha: 0
-    - _Noise_Scale: 2.01
+    - _Noise_Scale: 2
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Water_Effect: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
-    - _Power: {r: 1, g: 1, b: 0, a: 0}
+    - _Power: {r: 0, g: 0.05, b: 0, a: 0}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
     - _Speed: {r: 0.5, g: 0.1, b: 0, a: 0}
   m_BuildTextureStacks: []
