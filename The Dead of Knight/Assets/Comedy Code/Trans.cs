@@ -10,6 +10,7 @@ public class Trans : MonoBehaviour
     public bool Horizontal = false;
 
     private bool _falling = false;
+    private bool _left = false;
     
     private void OnTriggerEnter2D(Collider2D _other) 
     {
@@ -17,19 +18,26 @@ public class Trans : MonoBehaviour
         {
             Trigger();
             Debug.Log("Trigger");
-            if (PlayerManager.Player.getVelocity() <= 0f) {_falling = true;}
-            else {_falling = false;}
+            _falling = PlayerManager.Player.getVelocityY() <= 0f;
+            _left = PlayerManager.Player.getVelocityX() <= 0f;
+            if (PlayerManager.Player.isFalling()) {PlayerManager.Player.freeze();}
         }
     }
 
     private void OnTriggerExit2D(Collider2D _other)
     {
-        if (_other.tag == "Player" && !Horizontal) 
+        if (_other.tag == "Player") 
         {
-            if (PlayerManager.Player.getVelocity() <= 0f && !_falling)
+            if (!Horizontal && (PlayerManager.Player.getVelocityY() <= 0f && !_falling))
             {
                 Trigger();
-                Debug.Log("Trigger");
+                Debug.Log("Stupid edge case");
+            }
+
+            if (Horizontal && (PlayerManager.Player.getVelocityX() <= 0f ^ _left))
+            {
+                Trigger();
+                Debug.Log("Stupid edge case");
             }
             Debug.Log("Exit");
         }

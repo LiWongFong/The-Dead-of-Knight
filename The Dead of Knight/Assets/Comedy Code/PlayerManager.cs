@@ -9,13 +9,15 @@ public class PlayerManager : MonoBehaviour
 
     public float MaxChargeTime = 1f;
     public float MaxDashDistance = 4f;
-    public float Momentum = 6f;
+    public float VerticalMomentum = 12f;
+    public float HorizontalMomentum = 12f;
 
     private Rigidbody2D _body;
     private int _layermask;
     private bool _clicked = false;
     private bool _jump = false;
     private bool _reset = true;
+    private bool _falling = false;
     private float _startTime;
     private float _dashDistance;
     private bool _stuck = false;
@@ -107,6 +109,7 @@ public class PlayerManager : MonoBehaviour
         if (_jump) 
         {
             _jump = false;
+            StartCoroutine(falling());
             StartCoroutine(dLine());
             Vector2 launch = (worldPosition - transform.position.AsVector2());
             launch.Normalize();
@@ -136,12 +139,13 @@ public class PlayerManager : MonoBehaviour
             }
             
             _body.MovePosition(blinkEnd);
-            _body.velocity = (launch*Momentum);
+            _body.velocity = (launch*new Vector2(HorizontalMomentum,VerticalMomentum));
         }
 
         if (_body.velocity.y == 0f && !_stuck)
         {
             _reset = true;
+            _falling = false;
             _anim.SetTrigger("Ground");
             _anim.ResetTrigger("Dash");
             //Debug.Log("Reset");
@@ -155,7 +159,7 @@ public class PlayerManager : MonoBehaviour
         _body.constraints = RigidbodyConstraints2D.FreezeAll;
         yield return new WaitForSeconds(0.5f);
         _body.constraints = RigidbodyConstraints2D.FreezeRotation;
-        _body.velocity = (new Vector2(launch.x*-1,launch.y))*Momentum;
+        _body.velocity = (new Vector2(launch.x*-1,launch.y))*new Vector2(HorizontalMomentum,VerticalMomentum);
         yield return null;
         _stuck = false;
     }
@@ -167,7 +171,16 @@ public class PlayerManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         _body.constraints = RigidbodyConstraints2D.FreezeRotation;
         _body.MovePosition(transform.position.AsVector2()+(launch*_distance));
-        _body.velocity = (launch*Momentum);
+        _body.velocity = (launch*new Vector2(HorizontalMomentum,VerticalMomentum));
+        yield return null;
+        _stuck = false;
+    }
+
+    IEnumerator frozen(Vector2 v)
+    {
+        yield return new WaitForSeconds(2f);
+        _body.constraints = RigidbodyConstraints2D.FreezeRotation;
+        _body.velocity = v;
         yield return null;
         _stuck = false;
     }
@@ -179,13 +192,38 @@ public class PlayerManager : MonoBehaviour
         _trail.emitting = false;
     }
 
-    public float getVelocity()
+    IEnumerator falling()
+    {
+        yield return null;
+        yield return null;
+        _falling = true;
+    }
+
+    public void freeze()
+    {
+        _stuck = true;
+        var v = _body.velocity;
+        _body.constraints = RigidbodyConstraints2D.FreezeAll;
+        StartCoroutine(frozen(v));
+    }
+
+    public float getVelocityY()
     {
         return _body.velocity.y;
+    }
+
+    public float getVelocityX()
+    {
+        return _body.velocity.x;
     }
 
     public void setGravity(float gravity)
     {
         _body.gravityScale = gravity;
+    }
+
+    public bool isFalling()
+    {
+        return _falling;
     }
 }

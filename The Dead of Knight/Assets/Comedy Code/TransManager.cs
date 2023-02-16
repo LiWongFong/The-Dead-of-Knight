@@ -23,7 +23,7 @@ public class TransManager : MonoBehaviour
     {
         if (!SceneManager.GetSceneByBuildIndex(_nextScene).isLoaded)
         {
-            SceneManager.LoadSceneAsync(_nextScene, LoadSceneMode.Additive);
+            SceneManager.LoadScene(_nextScene, LoadSceneMode.Additive);
         }
     }
 
@@ -31,7 +31,7 @@ public class TransManager : MonoBehaviour
     {
         if (!SceneManager.GetSceneByName(_nextScene).isLoaded)
         {
-            SceneManager.LoadSceneAsync(_nextScene, LoadSceneMode.Additive);
+            SceneManager.LoadScene(_nextScene, LoadSceneMode.Additive);
         }
     }
 
