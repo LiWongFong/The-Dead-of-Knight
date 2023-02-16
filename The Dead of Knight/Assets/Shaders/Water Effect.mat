@@ -51,7 +51,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _EnableExternalAlpha: 0
-    - _Noise_Scale: 2
+    - _Noise_Scale: 3
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Water_Effect: 1
