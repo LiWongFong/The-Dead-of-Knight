@@ -10,6 +10,8 @@ public class meshHell : MonoBehaviour
     public float speed = 1f;
     public float Amp = 1f;
 
+    public List<MeshFilter> Meshes = new List<MeshFilter>();
+
     private Mesh _mesh;
 
     private Vector3[] _verts = new Vector3[4];
@@ -42,7 +44,10 @@ public class meshHell : MonoBehaviour
         _mesh.uv = _uv;
         _mesh.triangles = _tris;
 
-        GetComponent<MeshFilter>().sharedMesh = _mesh;
+        foreach (var mfilter in Meshes)
+        {
+            mfilter.sharedMesh = _mesh;
+        }
     }
 
     private void Update() {
@@ -56,7 +61,10 @@ public class meshHell : MonoBehaviour
         _mesh.uv = _uv;
         _mesh.vertices = _verts;
 
-        GetComponent<MeshFilter>().sharedMesh = _mesh;
+        foreach (var mfilter in Meshes)
+        {
+            mfilter.sharedMesh = _mesh;
+        }
     }
 
 

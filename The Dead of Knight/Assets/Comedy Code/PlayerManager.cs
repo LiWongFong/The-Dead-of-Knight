@@ -48,10 +48,11 @@ public class PlayerManager : MonoBehaviour
         _body = GetComponent<Rigidbody2D>();
         _trail = GetComponent<TrailRenderer>();
         _indi = GameObject.Find("Image").GetComponent<Indicator>();
-        _sword = transform.GetChild(0).gameObject;
+        _sword = transform.GetChild(1).gameObject;
         int playerLayer = 1 << gameObject.layer;
         int defaultLayer = 1 << 2;
-        _layermask = defaultLayer ^ playerLayer;
+        int edgecase = 1 << 6;
+        _layermask = defaultLayer ^ playerLayer ^ edgecase;
     }
 
     private void Update()
