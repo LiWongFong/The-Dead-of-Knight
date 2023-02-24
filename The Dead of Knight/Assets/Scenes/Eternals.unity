@@ -348,7 +348,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 583885792}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.9, y: -8.54, z: 0}
+  m_LocalPosition: {x: 2.01, y: 14.77, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -778,7 +778,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7293888052749301353, guid: e4d34442925a8f749ae084f3ef34eac6, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7293888052749301353, guid: e4d34442925a8f749ae084f3ef34eac6, type: 3}
       propertyPath: m_LocalScale.x
@@ -1116,11 +1116,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5861709234277836801, guid: e4d34442925a8f749ae084f3ef34eac6, type: 3}
       propertyPath: NextScene
-      value: W11
+      value: W13
       objectReference: {fileID: 0}
     - target: {fileID: 5861709234277836801, guid: e4d34442925a8f749ae084f3ef34eac6, type: 3}
       propertyPath: PrevScene
-      value: W10
+      value: W21
       objectReference: {fileID: 0}
     - target: {fileID: 5861709234277836801, guid: e4d34442925a8f749ae084f3ef34eac6, type: 3}
       propertyPath: nextScene
@@ -1136,7 +1136,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6925994927786762687, guid: e4d34442925a8f749ae084f3ef34eac6, type: 3}
       propertyPath: m_Name
-      value: Trans Line (1)
+      value: Trans Line (3)
       objectReference: {fileID: 0}
     - target: {fileID: 6925994927786762687, guid: e4d34442925a8f749ae084f3ef34eac6, type: 3}
       propertyPath: m_TagString
@@ -1144,7 +1144,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7293888052749301353, guid: e4d34442925a8f749ae084f3ef34eac6, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7293888052749301353, guid: e4d34442925a8f749ae084f3ef34eac6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1235,8 +1235,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1518298787}
-  - {fileID: 1523422927}
   - {fileID: 1214236430}
+  - {fileID: 1523422927}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
