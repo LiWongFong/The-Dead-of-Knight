@@ -65,6 +65,12 @@ TagManager:
   - name: Front
     uniqueID: 3835223753
     locked: 0
+  - name: New Layer 9
+    uniqueID: 3895825051
+    locked: 0
+  - name: Fog
+    uniqueID: 2401734195
+    locked: 0
   - name: Effects
     uniqueID: 1774962969
     locked: 0

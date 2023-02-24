@@ -9,10 +9,5 @@ public class SetSortingLayer : MonoBehaviour
     private void Awake() {
         GetComponent<Renderer>().sortingLayerName = SortingLayerName;
         Debug.Log(GetComponent<Renderer>().sortingLayerName);
-
-        foreach (var layer in SortingLayer.layers)
-        {
-            Debug.Log(layer.name);
-        }
     }
 }
