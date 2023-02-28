@@ -68,7 +68,7 @@ TextureImporter:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
-    resizeAlgorithm: 0
+    resizeAlgorithm: 1
     textureFormat: 4
     textureCompression: 1
     compressionQuality: 50
@@ -165,12 +165,6 @@ TextureImporter:
       - {x: -79, y: 146}
       - {x: -89, y: 126}
       - {x: -100, y: 115}
-    - - {x: -53, y: 171}
-      - {x: -57, y: 175}
-      - {x: -57, y: 180}
-      - {x: 100, y: 180}
-      - {x: 100, y: 175}
-      - {x: 96, y: 171}
     - - {x: -91, y: -22}
       - {x: -91, y: -18}
       - {x: -83, y: -18}

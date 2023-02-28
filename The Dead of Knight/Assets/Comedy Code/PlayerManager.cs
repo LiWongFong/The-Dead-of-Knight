@@ -169,7 +169,7 @@ public class PlayerManager : MonoBehaviour
     {
         yield return null;
         _body.constraints = RigidbodyConstraints2D.FreezeAll;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.5f);
         _body.constraints = RigidbodyConstraints2D.FreezeRotation;
         _body.MovePosition(transform.position.AsVector2()+(launch*_distance));
         _body.velocity = (launch*new Vector2(HorizontalMomentum,VerticalMomentum));
@@ -179,7 +179,7 @@ public class PlayerManager : MonoBehaviour
 
     IEnumerator frozen(Vector2 v)
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.5f);
         _body.constraints = RigidbodyConstraints2D.FreezeRotation;
         _body.velocity = v;
         yield return null;
