@@ -17,7 +17,7 @@ public class ButtonManager : MonoBehaviour
 
     public void NewGame()
     {
-        SceneManager.LoadScene("W13");
+        SceneManager.LoadScene("W11");
         StartCoroutine(LoadEternals());
         SceneManager.UnloadSceneAsync("Main Menu");
     }
