@@ -71,6 +71,12 @@ TagManager:
   - name: Fog
     uniqueID: 2401734195
     locked: 0
+  - name: New Layer 10
+    uniqueID: 3168052439
+    locked: 0
   - name: Effects
     uniqueID: 1774962969
+    locked: 0
+  - name: New Layer 11
+    uniqueID: 3903638771
     locked: 0
