@@ -2,15 +2,22 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class DialogSpeaker : MonoBehaviour
 {
     [SerializeField]
     private TextAsset Dialog;
 
+    [SerializeField]
+    private TextMeshProUGUI _tmp;
+
     private bool _stay = false;
     
     private string[] _lines;
+    private string display;
+    private int _line = 0;
+    private bool _speaking = false;
 
     private void Start()
     {
@@ -39,6 +46,26 @@ public class DialogSpeaker : MonoBehaviour
     IEnumerator waitCheck()
     {
         yield return new WaitForSeconds(1);
-        if (_stay) {Debug.Log(_lines[0]);}
+        if (_stay && !_speaking) {speak();}
+    }
+
+    private void speak()
+    {
+        StartCoroutine(type(_lines[_line]));
+        _line++;
+    }
+
+    IEnumerator type(string text)
+    {
+        _speaking = true;
+        for (int i = 0; i < text.Length; i++)
+        {
+            display = text.Substring(0,i);
+            _tmp.text = display;
+            yield return new WaitForSeconds(0.1f);
+        }
+        _speaking = false;
+        yield return new WaitForSeconds(1.5f);
+        _tmp.text = "";
     }
 }
