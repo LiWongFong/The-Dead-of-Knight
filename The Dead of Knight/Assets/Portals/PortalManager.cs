@@ -47,7 +47,11 @@ public class PortalManager : MonoBehaviour
         Debug.Log(bodyVel);
         bodyVel *= -1;
         
-        if (Mirror) {bodyVel *= new Vector2(1,-1);}
+        if (Mirror)
+        {
+            float reflectAngle = Vector2.SignedAngle(bodyVel,exit.transform.up);
+            bodyVel = bodyVel.Rotate(reflectAngle*2);
+        }
         Debug.Log(bodyVel);
 
         PlayerBody.MovePosition(exit.transform.position.AsVector2());
