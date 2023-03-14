@@ -12,7 +12,7 @@ public class PlayerManager : MonoBehaviour
     public float VerticalMomentum = 12f;
     public float HorizontalMomentum = 12f;
 
-    private Rigidbody2D _body;
+    
     private int _layermask;
     private bool _clicked = false;
     private bool _jump = false;
@@ -21,6 +21,9 @@ public class PlayerManager : MonoBehaviour
     private float _startTime;
     private float _dashDistance;
     private bool _stuck = false;
+    private Vector2 _direction;
+
+    private Rigidbody2D _body;
 
     private Animator _anim;
 
@@ -57,19 +60,25 @@ public class PlayerManager : MonoBehaviour
 
     private void Update()
     {
+        if (!Settings.Setting.Controller)
+        {
         Vector2 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        var direction = (worldPosition - transform.position.AsVector2());
-        direction.Normalize();
-        Vector3 direct3 = direction;
+        _direction = (worldPosition - transform.position.AsVector2());
+        } else 
+        {
+            _direction = new Vector2(Input.GetAxis("Horizontal"),Input.GetAxis("Vertical"));
+        }
+        _direction.Normalize();
+        Vector3 direct3 = _direction;
         _indi.MoveToClickPoint(transform.position + (direct3 * 1.0f));
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetButtonDown("Fire1"))
         {
             _startTime = Time.time;
             _clicked = true;
         }
 
-        if (((Time.time - _startTime >= MaxChargeTime) || Input.GetMouseButtonUp(0)) && _reset && _clicked)
+        if (((Time.time - _startTime >= MaxChargeTime) || Input.GetButtonUp("Fire1")) && _reset && _clicked)
         {      
             _dashDistance = (Time.time - _startTime) * (MaxDashDistance/MaxChargeTime);
             if (_dashDistance > MaxDashDistance) {_dashDistance = MaxDashDistance;}
@@ -97,7 +106,7 @@ public class PlayerManager : MonoBehaviour
         _sword.GetComponent<Animator>().SetTrigger("Shine");
         }
 
-        _sword.transform.up = -1*(worldPosition - _sword.transform.position.AsVector2()).Rotate(45);
+        _sword.transform.up = -1*(_direction).Rotate(45);
 
         if (_clicked) {_anim.SetFloat("Facing",direct3.x);}
 
@@ -106,13 +115,12 @@ public class PlayerManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector2 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         if (_jump) 
         {
             _jump = false;
             StartCoroutine(falling());
             StartCoroutine(dLine());
-            Vector2 launch = (worldPosition - transform.position.AsVector2());
+            Vector2 launch = _direction;
             launch.Normalize();
             RaycastHit2D hit = Physics2D.Raycast(transform.position.AsVector2(), launch, _dashDistance, ~_layermask);
             Vector2 blinkEnd;
@@ -161,7 +169,28 @@ public class PlayerManager : MonoBehaviour
         _body.constraints = RigidbodyConstraints2D.FreezeAll;
         yield return new WaitForSeconds(0.5f);
         _body.constraints = RigidbodyConstraints2D.FreezeRotation;
-        _body.velocity = (new Vector2(launch.x*-1,launch.y))*new Vector2(HorizontalMomentum,VerticalMomentum);
+        Vector2 newLaunch = launch * new Vector2(-1,1);
+        RaycastHit2D rehit = Physics2D.Raycast(transform.position.AsVector2(), newLaunch, _dashDistance, ~_layermask);
+        Vector2 bounceEnd;
+        if (rehit.collider == null)
+        {
+            bounceEnd = transform.position.AsVector2()+(launch*_dashDistance);
+        } else
+        {
+            switch (rehit.collider.tag)
+            {
+                case "Trans":
+                    bounceEnd = transform.position.AsVector2()+(launch*rehit.distance);
+                    StartCoroutine(trans(launch, _dashDistance - rehit.distance));
+                    _stuck = true;
+                    break;
+                default:
+                    bounceEnd = transform.position.AsVector2()+(launch*rehit.distance);
+                    break;
+            }
+        }
+        _body.MovePosition(bounceEnd);
+        _body.velocity = launch*new Vector2(HorizontalMomentum,VerticalMomentum);
         yield return null;
         _stuck = false;
     }
