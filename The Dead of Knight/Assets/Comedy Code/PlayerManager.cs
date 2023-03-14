@@ -150,6 +150,7 @@ public class PlayerManager : MonoBehaviour
             _anim.SetTrigger("Ground");
             _anim.ResetTrigger("Dash");
             //Debug.Log("Reset");
+            _body.velocity = new Vector2(0,0);
         }
     }
 
