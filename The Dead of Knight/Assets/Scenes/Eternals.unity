@@ -268,6 +268,10 @@ MonoBehaviour:
   MaxDashDistance: 4
   VerticalMomentum: 12
   HorizontalMomentum: 12
+  Jump: {fileID: 2226778350912781556, guid: 9eafb75dd591cb840aa37ed48663e543, type: 3}
+  Pause: {fileID: -4163369160258238465, guid: 9eafb75dd591cb840aa37ed48663e543, type: 3}
+  Joy: {fileID: 5781242171963319887, guid: 9eafb75dd591cb840aa37ed48663e543, type: 3}
+  Position: {fileID: -2818355760715157968, guid: 9eafb75dd591cb840aa37ed48663e543, type: 3}
 --- !u!50 &583885794
 Rigidbody2D:
   serializedVersion: 4
@@ -545,7 +549,27 @@ MonoBehaviour:
   m_ControlsChangedEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_ActionEvents: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 99aee38d-e5a7-4a92-bdbe-9e4d5fb53752
+    m_ActionName: Gameplay/Jump[/Keyboard/space,/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a9618b5b-cf7c-4a3f-bb2c-ceefbbdf30d0
+    m_ActionName: Gameplay/Position[/Mouse/position,/Pen/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: fc7fd46a-9952-404f-ac3a-7c13fec33466
+    m_ActionName: Gameplay/Joy
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7adcb5e1-7b2b-4f3b-b70d-79b1dac8d208
+    m_ActionName: Gameplay/Pause[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: bd5b7919-dcc2-4b2e-b323-95c86137be02
+    m_ActionName: Menu/New action
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
@@ -1343,7 +1367,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab33cb6f607fb154b839f88330221994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Controller: 1
+  Controller: 0
 --- !u!4 &1812338789
 Transform:
   m_ObjectHideFlags: 0
