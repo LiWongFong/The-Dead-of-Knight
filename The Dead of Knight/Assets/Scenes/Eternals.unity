@@ -571,7 +571,7 @@ MonoBehaviour:
     m_ActionId: bd5b7919-dcc2-4b2e-b323-95c86137be02
     m_ActionName: Menu/New action
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
+  m_DefaultControlScheme: KB&M
   m_DefaultActionMap: Gameplay
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}

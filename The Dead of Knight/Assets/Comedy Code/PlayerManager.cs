@@ -37,6 +37,8 @@ public class PlayerManager : MonoBehaviour
 
     private GameObject _sword;
 
+    private PlayerInput _input;
+
     private void Awake() {
         if (Player ==  null)
         {
@@ -66,6 +68,7 @@ public class PlayerManager : MonoBehaviour
         _trail = GetComponent<TrailRenderer>();
         _indi = GameObject.Find("Image").GetComponent<Indicator>();
         _sword = transform.GetChild(1).gameObject;
+        _input = GetComponent<PlayerInput>();
         int playerLayer = 1 << gameObject.layer;
         int defaultLayer = 1 << 2;
         int edgecase = 1 << 6;
@@ -104,7 +107,7 @@ public class PlayerManager : MonoBehaviour
 
     private void Update()
     {
-        if (!Settings.Setting.Controller)
+        if (_input.currentControlScheme == "KB&M")
         {
         Vector2 worldPosition = Camera.main.ScreenToWorldPoint(Position.action.ReadValue<Vector2>());
         _direction = (worldPosition - transform.position.AsVector2());
