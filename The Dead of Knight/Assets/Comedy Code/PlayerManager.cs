@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using ExtensionMethods;
+using UnityEngine.InputSystem;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -111,6 +112,11 @@ public class PlayerManager : MonoBehaviour
         if (_clicked) {_anim.SetFloat("Facing",direct3.x);}
 
         if (!_reset) {_startTime = Time.time;}
+    }
+
+    void OnJump(InputValue value)
+    {
+        Debug.Log("Jumpy");
     }
 
     private void FixedUpdate()
