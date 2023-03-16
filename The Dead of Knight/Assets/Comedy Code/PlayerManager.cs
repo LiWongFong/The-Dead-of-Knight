@@ -13,6 +13,9 @@ public class PlayerManager : MonoBehaviour
     public float VerticalMomentum = 12f;
     public float HorizontalMomentum = 12f;
 
+    [SerializeField]
+    private InputActionReference Jump, Pause, Joy, Position;
+
     
     private int _layermask;
     private bool _clicked = false;
@@ -45,6 +48,16 @@ public class PlayerManager : MonoBehaviour
         }    
     }
 
+    private void OnEnable() {
+        Jump.action.performed += OnClick;
+        Jump.action.canceled += OnRelease;
+    }
+
+    private void OnDisable() {
+        Jump.action.performed -= OnClick;
+        Jump.action.canceled -= OnRelease;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -59,28 +72,18 @@ public class PlayerManager : MonoBehaviour
         _layermask = defaultLayer ^ playerLayer ^ edgecase;
     }
 
-    private void Update()
+    private void OnClick(InputAction.CallbackContext ctx)
     {
-        if (!Settings.Setting.Controller)
-        {
-        Vector2 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        _direction = (worldPosition - transform.position.AsVector2());
-        } else 
-        {
-            _direction = new Vector2(Input.GetAxis("Horizontal"),Input.GetAxis("Vertical"));
-        }
-        _direction.Normalize();
-        Vector3 direct3 = _direction;
-        _indi.MoveToClickPoint(transform.position + (direct3 * 1.0f));
+        _startTime = Time.time;
+        _clicked = true;
+    }
 
-        if (Input.GetButtonDown("Fire1"))
-        {
-            _startTime = Time.time;
-            _clicked = true;
-        }
+    private void OnRelease(InputAction.CallbackContext ctx) {preJump();}
 
-        if (((Time.time - _startTime >= MaxChargeTime) || Input.GetButtonUp("Fire1")) && _reset && _clicked)
-        {      
+    private void preJump()
+    {
+        if (_reset && _clicked) 
+        {
             _dashDistance = (Time.time - _startTime) * (MaxDashDistance/MaxChargeTime);
             if (_dashDistance > MaxDashDistance) {_dashDistance = MaxDashDistance;}
             _jump = true; 
@@ -97,6 +100,23 @@ public class PlayerManager : MonoBehaviour
 
             Debug.Log("Pressed left click.");
         }
+    }
+
+    private void Update()
+    {
+        if (!Settings.Setting.Controller)
+        {
+        Vector2 worldPosition = Camera.main.ScreenToWorldPoint(Position.action.ReadValue<Vector2>());
+        _direction = (worldPosition - transform.position.AsVector2());
+        } else 
+        {
+            _direction = Joy.action.ReadValue<Vector2>();
+        }
+        _direction.Normalize();
+        Vector3 direct3 = _direction;
+        _indi.MoveToClickPoint(transform.position + (direct3 * 1.0f));
+
+        if (Time.time - _startTime >= MaxChargeTime) {preJump();}
 
         if (_clicked && _reset)
         {
@@ -108,15 +128,10 @@ public class PlayerManager : MonoBehaviour
         }
 
         _sword.transform.up = -1*(_direction).Rotate(45);
-
+ 
         if (_clicked) {_anim.SetFloat("Facing",direct3.x);}
 
         if (!_reset) {_startTime = Time.time;}
-    }
-
-    void OnJump(InputValue value)
-    {
-        Debug.Log("Jumpy");
     }
 
     private void FixedUpdate()
