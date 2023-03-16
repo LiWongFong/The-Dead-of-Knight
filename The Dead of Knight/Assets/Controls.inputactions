@@ -171,7 +171,7 @@
             "id": "e7d4a732-d306-4331-802d-adc589f63f22",
             "actions": [
                 {
-                    "name": "New action",
+                    "name": "Unpause",
                     "type": "Button",
                     "id": "bd5b7919-dcc2-4b2e-b323-95c86137be02",
                     "expectedControlType": "Button",
@@ -184,11 +184,22 @@
                 {
                     "name": "",
                     "id": "b12936d1-fe24-4aa4-8b55-85de83ca5fdf",
-                    "path": "",
+                    "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "New action",
+                    "groups": "KB&M",
+                    "action": "Unpause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8603b484-6e23-44bb-b7ea-d04fafa8f7da",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Sticks",
+                    "action": "Unpause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

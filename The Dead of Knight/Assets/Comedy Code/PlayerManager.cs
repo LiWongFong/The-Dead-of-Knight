@@ -27,6 +27,8 @@ public class PlayerManager : MonoBehaviour
     private bool _stuck = false;
     private Vector2 _direction;
 
+    private Vector2 _storedMomentum; 
+
     private Rigidbody2D _body;
 
     private Animator _anim;
@@ -51,6 +53,9 @@ public class PlayerManager : MonoBehaviour
     }
 
     private void OnEnable() {
+        //_input.SwitchCurrentActionMap("Gameplay");
+        //_body.constraints = RigidbodyConstraints2D.FreezeRotation;
+
         Jump.action.performed += OnClick;
         Jump.action.canceled += OnRelease;
     }
@@ -280,5 +285,15 @@ public class PlayerManager : MonoBehaviour
     public bool isFalling()
     {
         return _falling;
+    }
+
+    private void OnPause()
+    {
+        _storedMomentum = _body.velocity;
+        _body.constraints = RigidbodyConstraints2D.FreezeAll;
+        GameObject.Find("Menu").GetComponent<Menu>().pause();
+        _input.SwitchCurrentActionMap("Menu");
+        Debug.Log(_input.currentActionMap);
+        this.enabled = false;
     }
 }
