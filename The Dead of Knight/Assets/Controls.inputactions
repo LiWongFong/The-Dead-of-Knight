@@ -7,7 +7,7 @@
             "actions": [
                 {
                     "name": "Jump",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "99aee38d-e5a7-4a92-bdbe-9e4d5fb53752",
                     "expectedControlType": "Button",
                     "processors": "",

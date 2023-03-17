@@ -16,6 +16,8 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private InputActionReference Jump, Pause, Joy, Position;
 
+    [HideInInspector]
+    public Vector2 StoredMomentum; 
     
     private int _layermask;
     private bool _clicked = false;
@@ -27,7 +29,6 @@ public class PlayerManager : MonoBehaviour
     private bool _stuck = false;
     private Vector2 _direction;
 
-    private Vector2 _storedMomentum; 
 
     private Rigidbody2D _body;
 
@@ -66,7 +67,7 @@ public class PlayerManager : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         _anim = GetComponent<Animator>();
         _body = GetComponent<Rigidbody2D>();
@@ -267,31 +268,30 @@ public class PlayerManager : MonoBehaviour
         StartCoroutine(frozen(v));
     }
 
-    public float getVelocityY()
+    public float GetVelocityY()
     {
         return _body.velocity.y;
     }
 
-    public float getVelocityX()
+    public float GetVelocityX()
     {
         return _body.velocity.x;
     }
 
-    public void setGravity(float gravity)
+    public void SetGravity(float gravity)
     {
         _body.gravityScale = gravity;
     }
 
-    public bool isFalling()
+    public bool IsFalling()
     {
         return _falling;
     }
-
     private void OnPause()
     {
-        _storedMomentum = _body.velocity;
+        StoredMomentum = _body.velocity;
         _body.constraints = RigidbodyConstraints2D.FreezeAll;
-        GameObject.Find("Menu").GetComponent<Menu>().pause();
+        GameObject.Find("Menu").GetComponent<Menu>().Pause();
         _input.SwitchCurrentActionMap("Menu");
         Debug.Log(_input.currentActionMap);
         this.enabled = false;

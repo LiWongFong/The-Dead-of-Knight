@@ -18,9 +18,9 @@ public class Trans : MonoBehaviour
         {
             Trigger();
             Debug.Log("Trigger");
-            _falling = PlayerManager.Player.getVelocityY() <= 0f;
-            _left = PlayerManager.Player.getVelocityX() <= 0f;
-            if (PlayerManager.Player.isFalling()) {PlayerManager.Player.freeze();}
+            _falling = PlayerManager.Player.GetVelocityY() <= 0f;
+            _left = PlayerManager.Player.GetVelocityX() <= 0f;
+            if (PlayerManager.Player.IsFalling()) {PlayerManager.Player.freeze();}
         }
     }
 
@@ -28,13 +28,13 @@ public class Trans : MonoBehaviour
     {
         if (_other.tag == "Player") 
         {
-            if (!Horizontal && (PlayerManager.Player.getVelocityY() <= 0f && !_falling))
+            if (!Horizontal && (PlayerManager.Player.GetVelocityY() <= 0f && !_falling))
             {
                 Trigger();
                 Debug.Log("Stupid edge case");
             }
 
-            if (Horizontal && (PlayerManager.Player.getVelocityX() <= 0f ^ _left))
+            if (Horizontal && (PlayerManager.Player.GetVelocityX() <= 0f ^ _left))
             {
                 Trigger();
                 Debug.Log("Stupid edge case");
