@@ -72,7 +72,7 @@ public class PlayerManager : MonoBehaviour
         _anim = GetComponent<Animator>();
         _body = GetComponent<Rigidbody2D>();
         _trail = GetComponent<TrailRenderer>();
-        _indi = GameObject.Find("Image").GetComponent<Indicator>();
+        _indi = GameObject.Find("Indicator").GetComponent<Indicator>();
         _sword = transform.GetChild(1).gameObject;
         _input = GetComponent<PlayerInput>();
         int playerLayer = 1 << gameObject.layer;
@@ -291,9 +291,11 @@ public class PlayerManager : MonoBehaviour
     {
         StoredMomentum = _body.velocity;
         _body.constraints = RigidbodyConstraints2D.FreezeAll;
-        GameObject.Find("Menu").GetComponent<Menu>().Pause();
+        GameObject.Find("Pause Menu").GetComponent<PauseMenu>().Pause();
+        //Menu is empty but need to be changed for the stupid fucking edge case
         _input.SwitchCurrentActionMap("Menu");
         Debug.Log(_input.currentActionMap);
         this.enabled = false;
     }
+
 }

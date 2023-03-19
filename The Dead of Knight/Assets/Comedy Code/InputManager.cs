@@ -28,14 +28,12 @@ public class InputManager : MonoBehaviour
         _input = GetComponent<PlayerInput>();
     }
 
-
-
     public void Unpause()
     {
         _input.SwitchCurrentActionMap("Gameplay");
         PlayerManager.Player.enabled = true;
         _body.constraints = RigidbodyConstraints2D.FreezeRotation;
         _body.velocity = _storedMomentum;
-        GameObject.Find("Menu").GetComponent<Menu>().UnPause();
+        GameObject.Find("Pause Menu").GetComponent<PauseMenu>().UnPause();
     }
 }

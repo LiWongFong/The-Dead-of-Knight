@@ -3,23 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Menu : MonoBehaviour
+public class PauseMenu : MonoBehaviour
 {
     [SerializeField]
-    private GameObject _dim, _text, _buttons;
+    private GameObject _dim, _core;
 
     public void Pause()
     {
         _dim.SetActive(true);
-        _buttons.SetActive(true);
-        _text.SetActive(true);
+        _core.SetActive(true);
     }
 
     public void UnPause()
     {
         _dim.SetActive(false);
-        _buttons.SetActive(false);
-        _text.SetActive(false);
+        _core.SetActive(false);
 
         PlayerManager.Player.gameObject.GetComponent<PlayerInput>().SwitchCurrentActionMap("Gameplay");
         PlayerManager.Player.enabled = true;

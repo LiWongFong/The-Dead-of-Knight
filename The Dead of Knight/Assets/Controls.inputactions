@@ -88,7 +88,7 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "Point",
+                    "name": "Direction",
                     "id": "48b58c8b-e481-4a54-9224-f3026ca8196a",
                     "path": "2DVector(mode=2)",
                     "interactions": "",
@@ -168,12 +168,12 @@
         },
         {
             "name": "Menu",
-            "id": "e7d4a732-d306-4331-802d-adc589f63f22",
+            "id": "16ef9d06-d07b-4ed1-8e3e-691b16088c8c",
             "actions": [
                 {
-                    "name": "Unpause",
+                    "name": "Cancel",
                     "type": "Button",
-                    "id": "bd5b7919-dcc2-4b2e-b323-95c86137be02",
+                    "id": "24bbd638-c6ed-4ee9-a395-086438ae6a48",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -183,23 +183,12 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "b12936d1-fe24-4aa4-8b55-85de83ca5fdf",
-                    "path": "<Keyboard>/escape",
+                    "id": "2bd01c8e-2ebb-4b9d-baf2-10ef77216e7e",
+                    "path": "*/{Cancel}",
                     "interactions": "",
                     "processors": "",
-                    "groups": "KB&M",
-                    "action": "Unpause",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "8603b484-6e23-44bb-b7ea-d04fafa8f7da",
-                    "path": "<Gamepad>/start",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Sticks",
-                    "action": "Unpause",
+                    "groups": "Sticks;KB&M",
+                    "action": "Cancel",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
