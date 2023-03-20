@@ -81,6 +81,9 @@ public class PlayerManager : MonoBehaviour
         int defaultLayer = 1 << 2;
         int edgecase = 1 << 6;
         _layermask = defaultLayer ^ playerLayer ^ edgecase;
+
+        _body.transform.position = DataManager.dManager.Position;
+        _body.velocity = DataManager.dManager.Velocity;
     }
 
     private void OnClick(InputAction.CallbackContext ctx)

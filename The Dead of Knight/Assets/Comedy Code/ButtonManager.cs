@@ -17,7 +17,7 @@ public class ButtonManager : MonoBehaviour
 
     public void NewGame()
     {
-        SceneManager.LoadScene("W11");
+        SceneManager.LoadScene(DataManager.dManager.Level);
         StartCoroutine(LoadEternals());
         SceneManager.UnloadSceneAsync("Main Menu");
     }
@@ -27,5 +27,9 @@ public class ButtonManager : MonoBehaviour
         SceneManager.LoadScene("Eternals", LoadSceneMode.Additive);
         yield return null;
         SceneManager.SetActiveScene(SceneManager.GetSceneByName("Eternals"));
+        //add save later
+        //x:-91.28 y:-9.21
+        //yield return null;
+        //PlayerManager.Player.transform.position = new Vector3(-91.28f,-9.21f,0);
     }
 }
