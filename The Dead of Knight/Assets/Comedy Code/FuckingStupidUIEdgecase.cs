@@ -31,6 +31,7 @@ public class FuckingStupidUIEdgecase : MonoBehaviour
         {
             _UIinput.deselectOnBackgroundClick = true;
             if (_event.currentSelectedGameObject != null) {_lastSelected = _event.currentSelectedGameObject;}
+            _event.SetSelectedGameObject(null, new BaseEventData(_event));
         } else 
         {
             _UIinput.deselectOnBackgroundClick = false;
