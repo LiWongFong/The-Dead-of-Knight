@@ -220,7 +220,7 @@ GameObject:
   - component: {fileID: 189032254}
   m_Layer: 0
   m_Name: World_1-3_Tiles
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

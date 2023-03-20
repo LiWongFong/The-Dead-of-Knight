@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +17,8 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private InputActionReference Jump, Pause, Joy, Position;
 
+    [HideInInspector]
+    public Vector2 StoredMomentum; 
     
     private int _layermask;
     private bool _clicked = false;
@@ -26,6 +29,8 @@ public class PlayerManager : MonoBehaviour
     private float _dashDistance;
     private bool _stuck = false;
     private Vector2 _direction;
+    private float _prevYVelocity = 0;
+
 
     private Rigidbody2D _body;
 
@@ -51,6 +56,9 @@ public class PlayerManager : MonoBehaviour
     }
 
     private void OnEnable() {
+        //_input.SwitchCurrentActionMap("Gameplay");
+        //_body.constraints = RigidbodyConstraints2D.FreezeRotation;
+
         Jump.action.performed += OnClick;
         Jump.action.canceled += OnRelease;
     }
@@ -61,12 +69,12 @@ public class PlayerManager : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         _anim = GetComponent<Animator>();
         _body = GetComponent<Rigidbody2D>();
         _trail = GetComponent<TrailRenderer>();
-        _indi = GameObject.Find("Image").GetComponent<Indicator>();
+        _indi = GameObject.Find("Indicator").GetComponent<Indicator>();
         _sword = transform.GetChild(1).gameObject;
         _input = GetComponent<PlayerInput>();
         int playerLayer = 1 << gameObject.layer;
@@ -163,10 +171,12 @@ public class PlayerManager : MonoBehaviour
                     case "Wall":
                         blinkEnd = transform.position.AsVector2()+(launch*hit.distance);
                         _stuck = true;
-                        StartCoroutine(stick(launch));
+                        blinkEnd += (hit.normal * collisionFix(blinkEnd,hit.normal));
+                        StartCoroutine(stick(launch,hit.normal));
                         break;
                     default:
                         blinkEnd = transform.position.AsVector2()+(launch*hit.distance);
+                        blinkEnd += (hit.normal * collisionFix(blinkEnd,hit.normal));
                         break;
                 }
             }
@@ -175,7 +185,7 @@ public class PlayerManager : MonoBehaviour
             _body.velocity = (launch*new Vector2(HorizontalMomentum,VerticalMomentum));
         }
 
-        if (_body.velocity.y == 0f && !_stuck)
+        if (_body.velocity.y == 0f && _prevYVelocity == 0f && !_stuck)
         {
             _reset = true;
             _falling = false;
@@ -184,37 +194,74 @@ public class PlayerManager : MonoBehaviour
             //Debug.Log("Reset");
             _body.velocity = new Vector2(0,0);
         }
+
+        _prevYVelocity = _body.velocity.y;
     }
 
-    IEnumerator stick(Vector2 launch)
+    private float collisionFix(Vector2 endPosition, Vector2 normal)
+    {
+        float mag = 0;
+        
+        Vector2 fullSize = GetComponent<BoxCollider2D>().size;
+        float diagAngle = Mathf.Atan((fullSize.y/2)/(fullSize.x/2));
+
+        float theta = Vector2.Angle(normal,new Vector2(1,0));
+        if (theta > 90) {theta = 180 - theta;}
+
+        if (theta > diagAngle)
+        {
+            //c = y/sin(theta)
+            mag = (fullSize.y/2)/Mathf.Sin(theta);
+        }
+        else if (theta < diagAngle)
+        {
+            //c = x/cos(theta)
+            mag = (fullSize.x/2)/Mathf.Cos(theta);
+        }
+        else
+        {
+            // x^2 + y^2 = c^2
+            mag = Mathf.Sqrt(((fullSize.y/2)*(fullSize.y/2))+((fullSize.x/2)*(fullSize.x/2)));
+        }
+
+        return mag;
+    }
+
+    IEnumerator stick(Vector2 launch, Vector2 normal)
     {
         yield return null;
         Debug.Log("Stuck");
         _body.constraints = RigidbodyConstraints2D.FreezeAll;
         yield return new WaitForSeconds(0.5f);
         _body.constraints = RigidbodyConstraints2D.FreezeRotation;
-        Vector2 newLaunch = launch * new Vector2(-1,1);
+
+        Vector2 antiNormal = normal.Rotate(90);
+        float reflectAngle = Vector2.SignedAngle(launch,antiNormal);
+        Vector2 newLaunch = launch.Rotate(reflectAngle*2);
+
         RaycastHit2D rehit = Physics2D.Raycast(transform.position.AsVector2(), newLaunch, _dashDistance, ~_layermask);
         Vector2 bounceEnd;
         if (rehit.collider == null)
         {
-            bounceEnd = transform.position.AsVector2()+(launch*_dashDistance);
+            bounceEnd = transform.position.AsVector2()+(newLaunch*_dashDistance);
         } else
         {
             switch (rehit.collider.tag)
             {
                 case "Trans":
-                    bounceEnd = transform.position.AsVector2()+(launch*rehit.distance);
-                    StartCoroutine(trans(launch, _dashDistance - rehit.distance));
+                    bounceEnd = transform.position.AsVector2()+(newLaunch*rehit.distance);
+                    StartCoroutine(trans(newLaunch, _dashDistance - rehit.distance));
                     _stuck = true;
                     break;
                 default:
-                    bounceEnd = transform.position.AsVector2()+(launch*rehit.distance);
+                    bounceEnd = transform.position.AsVector2()+(newLaunch*rehit.distance);
+                    bounceEnd += (rehit.normal * collisionFix(bounceEnd,rehit.normal));
                     break;
             }
         }
+
         _body.MovePosition(bounceEnd);
-        _body.velocity = launch*new Vector2(HorizontalMomentum,VerticalMomentum);
+        _body.velocity = newLaunch*new Vector2(HorizontalMomentum,VerticalMomentum);
         yield return null;
         _stuck = false;
     }
@@ -225,6 +272,7 @@ public class PlayerManager : MonoBehaviour
         _body.constraints = RigidbodyConstraints2D.FreezeAll;
         yield return new WaitForSeconds(0.5f);
         _body.constraints = RigidbodyConstraints2D.FreezeRotation;
+
         _body.MovePosition(transform.position.AsVector2()+(launch*_distance));
         _body.velocity = (launch*new Vector2(HorizontalMomentum,VerticalMomentum));
         yield return null;
@@ -262,23 +310,34 @@ public class PlayerManager : MonoBehaviour
         StartCoroutine(frozen(v));
     }
 
-    public float getVelocityY()
+    public float GetVelocityY()
     {
         return _body.velocity.y;
     }
 
-    public float getVelocityX()
+    public float GetVelocityX()
     {
         return _body.velocity.x;
     }
 
-    public void setGravity(float gravity)
+    public void SetGravity(float gravity)
     {
         _body.gravityScale = gravity;
     }
 
-    public bool isFalling()
+    public bool IsFalling()
     {
         return _falling;
     }
+    private void OnPause()
+    {
+        StoredMomentum = _body.velocity;
+        _body.constraints = RigidbodyConstraints2D.FreezeAll;
+        GameObject.Find("Pause Menu").GetComponent<PauseMenu>().Pause();
+        //Menu is empty but need to be changed for the stupid fucking edge case
+        _input.SwitchCurrentActionMap("Menu");
+        Debug.Log(_input.currentActionMap);
+        this.enabled = false;
+    }
+
 }

@@ -10,6 +10,7 @@ TagManager:
   - Center
   - Trans
   - Wall
+  - Dim
   layers:
   - Default
   - TransparentFX

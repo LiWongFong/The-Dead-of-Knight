@@ -8,12 +8,12 @@ public class Water : MonoBehaviour
     {
         Debug.Log("Wet");
         PlayerManager.Player.MaxChargeTime *= 2.5f;
-        PlayerManager.Player.setGravity(1);
+        PlayerManager.Player.SetGravity(1);
     }
 
     private void OnTriggerExit(Collider other) {
         Debug.Log("Dry");
         PlayerManager.Player.MaxChargeTime /= 2.5f;
-        PlayerManager.Player.setGravity(5);
+        PlayerManager.Player.SetGravity(5);
     }
 }
