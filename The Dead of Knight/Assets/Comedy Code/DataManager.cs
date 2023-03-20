@@ -9,7 +9,7 @@ public class DataManager : MonoBehaviour
     public static DataManager dManager;
 
             
-    private SaveData _save;
+    private SaveData _save = null;
 
     private static string DataFilePath;
 
@@ -27,21 +27,13 @@ public class DataManager : MonoBehaviour
         DataFilePath = Path.Combine(Application.persistentDataPath, "GameData.json");
     }
 
-    public string Level {get => _save.Level;}
-    public Vector2 Position {get => _save.Position;}
-    public Vector2 Velocity {get => _save.Velocity;}
+    public SaveData SaveFile {get => _save;}
+    public string Level {get => _save.Level; set => _save.Level = value;}
+    public Vector2 Position {get => _save.Position; set => _save.Position = value;}
+    public Vector2 Velocity {get => _save.Velocity; set => _save.Velocity = value;}
 
     private void Start() {
-        try
-        {
-            Load();
-        }
-        catch (FileNotFoundException e)
-        {
-            //x:-91.28 y:-9.21
-            _save = new SaveData("W11",new Vector2(-91.28f,-9.21f),new Vector2(0,0));
-        }
-
+        if (_save == null) {_save = new SaveData("W11",new Vector2(-91.28f,-9.21f),new Vector2(0,0));}
         print(_save.toString());
     }
 

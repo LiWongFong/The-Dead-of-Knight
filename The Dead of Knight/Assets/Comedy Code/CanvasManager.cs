@@ -10,7 +10,6 @@ public class CanvasManager : MonoBehaviour
         if (cManager ==  null)
         {
             cManager = this;
-            DontDestroyOnLoad(this);
         } else if (cManager != this)
         {
             Destroy(gameObject);

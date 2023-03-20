@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using ExtensionMethods;
 
 public class CoreMenu : MonoBehaviour
 {
@@ -41,7 +42,18 @@ public class CoreMenu : MonoBehaviour
     
     public void SaveNQuit()
     {
-        //TODO save
+        int countLoaded = SceneManager.sceneCount;
+        for (int i = 0; i < countLoaded; i++)
+        {
+            if (SceneManager.GetSceneAt(i).name.Substring(0,1) == "W")
+            {
+                DataManager.dManager.Level = SceneManager.GetSceneAt(i).name;
+            }
+        }
+
+        DataManager.dManager.Position = PlayerManager.Player.transform.position.AsVector2();
+        DataManager.dManager.Velocity = PlayerManager.Player.StoredMomentum;
+
         SceneManager.LoadScene("Main Menu");
     }
 

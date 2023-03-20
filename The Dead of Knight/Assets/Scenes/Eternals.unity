@@ -1103,7 +1103,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 583885792}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 33.2, y: 54.4, z: 0}
+  m_LocalPosition: {x: -12.48, y: -8.74, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1593,8 +1593,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+      - m_Target: {fileID: 1160742104}
+        m_TargetAssemblyTypeName: CoreMenu, Assembly-CSharp
         m_MethodName: SaveNQuit
         m_Mode: 1
         m_Arguments:
@@ -2063,7 +2063,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1088643954}
   - component: {fileID: 1088643953}
-  - component: {fileID: 1088643955}
   - component: {fileID: 1088643956}
   - component: {fileID: 1088643957}
   m_Layer: 0
@@ -2103,18 +2102,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1088643955
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1088643951}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d2464709d2bd8641815e4992a2aea9c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1088643956
 MonoBehaviour:
   m_ObjectHideFlags: 0

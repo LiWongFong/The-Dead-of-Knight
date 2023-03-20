@@ -12,7 +12,6 @@ public class TransManager : MonoBehaviour
         if (tManager ==  null)
         {
             tManager = this;
-            DontDestroyOnLoad(this);
         } else if (tManager != this)
         {
             Destroy(gameObject);

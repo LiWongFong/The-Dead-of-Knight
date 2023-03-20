@@ -48,7 +48,6 @@ public class PlayerManager : MonoBehaviour
         if (Player ==  null)
         {
             Player = this;
-            DontDestroyOnLoad(this);
         } else if (Player != this)
         {
             Destroy(gameObject);
