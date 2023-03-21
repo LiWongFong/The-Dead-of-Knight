@@ -73,6 +73,8 @@ public class DataManager : MonoBehaviour
 
     private void Quit() {
         Debug.Log("Exit called");
+        var t = Time.time;
+        Debug.Log(t);
         try
         {
             int countLoaded = SceneManager.sceneCount;
@@ -95,10 +97,12 @@ public class DataManager : MonoBehaviour
                 _save.Velocity = PlayerManager.Player.StoredMomentum;
             }
         }
-        catch (NullReferenceException e)
+        catch (MissingReferenceException e)
         {
             print(e);
         }
         if (_save != null) {Save();}
+        Debug.Log(Time.time);
+        Debug.Log(Time.time - t);
     }
 }
