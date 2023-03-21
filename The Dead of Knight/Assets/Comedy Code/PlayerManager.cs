@@ -83,6 +83,7 @@ public class PlayerManager : MonoBehaviour
 
         _body.transform.position = DataManager.dManager.Position;
         _body.velocity = DataManager.dManager.Velocity;
+        _anim.SetFloat("Facing", _body.velocity.x);
     }
 
     private void OnClick(InputAction.CallbackContext ctx)

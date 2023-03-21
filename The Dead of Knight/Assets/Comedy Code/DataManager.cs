@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using ExtensionMethods;
 
 public class DataManager : MonoBehaviour
 {
@@ -25,6 +27,7 @@ public class DataManager : MonoBehaviour
         }    
 
         DataFilePath = Path.Combine(Application.persistentDataPath, "GameData.json");
+        Application.quitting += Quit;
     }
 
     public SaveData SaveFile {get => _save;}
@@ -33,8 +36,8 @@ public class DataManager : MonoBehaviour
     public Vector2 Velocity {get => _save.Velocity; set => _save.Velocity = value;}
 
     private void Start() {
-        if (_save == null) {_save = new SaveData("W11",new Vector2(-91.28f,-9.21f),new Vector2(0,0));}
-        print(_save.toString());
+        try {Load();}
+        catch (FileNotFoundException e) {print(e);}
     }
 
     public void Save()
@@ -63,5 +66,39 @@ public class DataManager : MonoBehaviour
         }
     }
 
+    public void Overwrite()
+    {
+        _save = new SaveData("W11",new Vector2(-91.28f,-9.21f),new Vector2(0,0));
+    }
 
+    private void Quit() {
+        Debug.Log("Exit called");
+        try
+        {
+            int countLoaded = SceneManager.sceneCount;
+            for (int i = 0; i < countLoaded; i++)
+            {
+                if (SceneManager.GetSceneAt(i).name.Substring(0,1) == "W")
+                {
+                    _save.Level = SceneManager.GetSceneAt(i).name;
+                }
+            }
+
+            _save.Position = PlayerManager.Player.transform.position.AsVector2();
+
+            if (PlayerManager.Player.GetComponent<Rigidbody2D>().constraints == RigidbodyConstraints2D.FreezeRotation)
+            {
+                _save.Velocity = PlayerManager.Player.GetComponent<Rigidbody2D>().velocity;
+            }
+            else
+            {
+                _save.Velocity = PlayerManager.Player.StoredMomentum;
+            }
+        }
+        catch (NullReferenceException e)
+        {
+            print(e);
+        }
+        if (_save != null) {Save();}
+    }
 }
