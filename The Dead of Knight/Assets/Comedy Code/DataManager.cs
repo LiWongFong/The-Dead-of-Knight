@@ -97,12 +97,15 @@ public class DataManager : MonoBehaviour
                 _save.Velocity = PlayerManager.Player.StoredMomentum;
             }
         }
-        catch (MissingReferenceException e)
+        catch (Exception e)
         {
             print(e);
         }
         if (_save != null) {Save();}
         Debug.Log(Time.time);
         Debug.Log(Time.time - t);
+
+        //task manager kill. This is terrible but otherwise it will freeze
+        if (!Application.isEditor) {System.Diagnostics.Process.GetCurrentProcess().Kill();}
     }
 }
