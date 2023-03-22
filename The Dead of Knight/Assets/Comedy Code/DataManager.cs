@@ -26,7 +26,7 @@ public class DataManager : MonoBehaviour
             Destroy(gameObject);
         }    
 
-        DataFilePath = Path.Combine(Application.persistentDataPath, "GameData.json");
+        DataFilePath = Path.Combine(Application.persistentDataPath, "Save.json");
         Application.quitting += Quit;
     }
 

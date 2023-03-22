@@ -1,16 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using ExtensionMethods;
 
-public class CoreMenu : Menu
+public class SettingsMenu : Menu
 {
     [SerializeField]
-    private GameObject _settings;
+    private GameObject _core;
 
     protected override void OnEnable() {
         if (_event == null) {_event = FuckingStupidUIEdgecase.EVID.GetComponent<EventSystem>();}
@@ -35,21 +33,10 @@ public class CoreMenu : Menu
             GetComponent<RectTransform>().GetChild(i).gameObject.GetComponent<Button>().enabled = false;
         }
     }
-    
-    public void SaveNQuit()
+
+    public void Return()
     {
-        int countLoaded = SceneManager.sceneCount;
-        for (int i = 0; i < countLoaded; i++)
-        {
-            if (SceneManager.GetSceneAt(i).name.Substring(0,1) == "W")
-            {
-                DataManager.dManager.Level = SceneManager.GetSceneAt(i).name;
-            }
-        }
-
-        DataManager.dManager.Position = PlayerManager.Player.transform.position.AsVector2();
-        DataManager.dManager.Velocity = PlayerManager.Player.StoredMomentum;
-
-        SceneManager.LoadScene("Main Menu");
+        _core.GetComponent<CoreMenu>().enabled = true;
+        this.gameObject.SetActive(false);
     }
 }

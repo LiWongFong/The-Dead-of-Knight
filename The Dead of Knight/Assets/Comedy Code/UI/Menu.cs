@@ -2,33 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 
-public class OptionsMenu : MonoBehaviour
+public class Menu : MonoBehaviour
 {
     [SerializeField]
-    private GameObject _default, _core;
+    protected GameObject _default;
 
-    private GameObject _lastSelected = null;
+    protected GameObject _lastSelected = null;
 
-    private EventSystem _event;
+    protected EventSystem _event;
 
-    private void OnEnable() {
+
+    protected virtual void OnEnable() {
         if (_event == null) {_event = FuckingStupidUIEdgecase.EVID.GetComponent<EventSystem>();}
         StartCoroutine(MoveSelected());
     }
 
-    private void OnDisable() {
+    protected virtual void OnDisable() {
         _lastSelected = _event.currentSelectedGameObject;
     }
 
-    public void Return()
+    public void Open(GameObject menu)
     {
-        _core.GetComponent<CoreMenu>().enabled = true;
-        this.gameObject.SetActive(false);
+        menu.SetActive(true);
+        this.enabled = false;
     }
-    
-    private IEnumerator MoveSelected()
+
+    protected IEnumerator MoveSelected()
     {
         yield return null;
         if (_lastSelected == null) {_lastSelected = _default;}
