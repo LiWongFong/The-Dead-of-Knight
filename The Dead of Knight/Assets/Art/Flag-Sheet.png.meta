@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: abc1f36eeefcc3a4f806d9242319bb39
+guid: 64a2fa4f68851e746a2f7efee48f21d2
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,13 +105,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Hand_Glow-Sheet_0
+      name: Flag-Sheet_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 96
-        height: 112
+        width: 80
+        height: 124
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -119,20 +119,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e10e41da8541a424ca850b47880bcedd
-      internalID: 2101576810
+      spriteID: bc30563f5ed02d0419e00d7ccececa4b
+      internalID: 1816576123
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hand_Glow-Sheet_1
+      name: Flag-Sheet_1
       rect:
         serializedVersion: 2
-        x: 96
+        x: 80
         y: 0
-        width: 96
-        height: 112
+        width: 80
+        height: 124
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,20 +140,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 611643f123443e448a00f57ae50acc19
-      internalID: -981599014
+      spriteID: ecbfdd2ec16542b4ab66ea1379145871
+      internalID: -883633809
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hand_Glow-Sheet_2
+      name: Flag-Sheet_2
       rect:
         serializedVersion: 2
-        x: 192
+        x: 160
         y: 0
-        width: 96
-        height: 112
+        width: 80
+        height: 124
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -161,20 +161,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8884c154ca156814fa64b9ee043875ab
-      internalID: 299801311
+      spriteID: 75777a8239d3c1347b60aeec0f429eca
+      internalID: -1702225005
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hand_Glow-Sheet_3
+      name: Flag-Sheet_3
       rect:
         serializedVersion: 2
-        x: 288
+        x: 240
         y: 0
-        width: 96
-        height: 112
+        width: 80
+        height: 124
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -182,20 +182,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 710d4dd1fb4dc314b92930dd0af2ed3b
-      internalID: 1141158195
+      spriteID: 047d8417ce356d14aaaddf24c6ab5329
+      internalID: -491938446
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hand_Glow-Sheet_4
+      name: Flag-Sheet_4
       rect:
         serializedVersion: 2
-        x: 384
+        x: 320
         y: 0
-        width: 96
-        height: 112
+        width: 80
+        height: 124
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -203,20 +203,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bbe75489ed21f8e42ae4534d91e49184
-      internalID: 837095898
+      spriteID: d1e4262b762193d4da8b5a184ee1e50e
+      internalID: -796795701
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hand_Glow-Sheet_5
+      name: Flag-Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 0
+        width: 80
+        height: 124
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e93400f3db79e74b88bd5cb500c7392
+      internalID: 1740595971
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Flag-Sheet_6
       rect:
         serializedVersion: 2
         x: 480
         y: 0
-        width: 96
-        height: 112
+        width: 80
+        height: 124
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -224,20 +245,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c07aaf3671165d646b419c0dda7a4728
-      internalID: 961533128
+      spriteID: a89a79232f1bd034eb419cfa0f061aca
+      internalID: 210609862
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Hand_Glow-Sheet_6
+      name: Flag-Sheet_7
       rect:
         serializedVersion: 2
-        x: 576
+        x: 560
         y: 0
-        width: 96
-        height: 112
+        width: 80
+        height: 124
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -245,113 +266,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 092562a6dc9fd894782959af0e131639
-      internalID: -1375193338
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Hand_Glow-Sheet_7
-      rect:
-        serializedVersion: 2
-        x: 672
-        y: 0
-        width: 96
-        height: 112
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 13ff3e85703def448bd1dc386f201a8d
-      internalID: 2146365044
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Hand_Glow-Sheet_8
-      rect:
-        serializedVersion: 2
-        x: 768
-        y: 0
-        width: 96
-        height: 112
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1a0d37a60153b5d419a27f65a26835bb
-      internalID: -1578321982
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Hand_Glow-Sheet_9
-      rect:
-        serializedVersion: 2
-        x: 864
-        y: 0
-        width: 96
-        height: 112
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7c32fe6ea16bd1840b7e165df2b3a335
-      internalID: -152782794
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Hand_Glow-Sheet_10
-      rect:
-        serializedVersion: 2
-        x: 960
-        y: 0
-        width: 96
-        height: 112
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 210ee8eb31d5d6a46abce72455c7590c
-      internalID: -558516622
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Hand_Glow-Sheet_11
-      rect:
-        serializedVersion: 2
-        x: 1056
-        y: 0
-        width: 96
-        height: 112
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1d48cf64381caac469dbf570ee443476
-      internalID: 1711890110
+      spriteID: b1e1efe07fd22de45aedbd1c7c44abe9
+      internalID: -2078531954
       vertices: []
       indices: 
       edges: []
@@ -367,18 +283,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Hand_Glow-Sheet_1: -981599014
-      Hand_Glow-Sheet_4: 837095898
-      Hand_Glow-Sheet_3: 1141158195
-      Hand_Glow-Sheet_6: -1375193338
-      Hand_Glow-Sheet_0: 2101576810
-      Hand_Glow-Sheet_11: 1711890110
-      Hand_Glow-Sheet_10: -558516622
-      Hand_Glow-Sheet_2: 299801311
-      Hand_Glow-Sheet_5: 961533128
-      Hand_Glow-Sheet_7: 2146365044
-      Hand_Glow-Sheet_9: -152782794
-      Hand_Glow-Sheet_8: -1578321982
+      Flag-Sheet_2: -1702225005
+      Flag-Sheet_7: -2078531954
+      Flag-Sheet_3: -491938446
+      Flag-Sheet_1: -883633809
+      Flag-Sheet_0: 1816576123
+      Flag-Sheet_6: 210609862
+      Flag-Sheet_5: 1740595971
+      Flag-Sheet_4: -796795701
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

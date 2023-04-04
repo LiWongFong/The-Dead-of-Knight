@@ -53,6 +53,7 @@ public class DialogSpeaker : MonoBehaviour
     {
         StartCoroutine(type(_lines[_line]));
         _line++;
+        //make animations restart or smth i dont care
     }
 
     IEnumerator type(string text)

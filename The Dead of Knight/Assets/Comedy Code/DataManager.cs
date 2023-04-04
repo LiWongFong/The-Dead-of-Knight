@@ -28,6 +28,8 @@ public class DataManager : MonoBehaviour
 
         DataFilePath = Path.Combine(Application.persistentDataPath, "Save.json");
         Application.quitting += Quit;
+
+        Application.runInBackground = Extensions.intToBool(PlayerPrefs.GetInt("RunInBackground", 0));
     }
 
     public SaveData SaveFile {get => _save;}
