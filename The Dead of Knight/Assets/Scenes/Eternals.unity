@@ -673,8 +673,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4281413937
+  m_fontColor: {r: 0.19215688, g: 0.19215688, b: 0.19215688, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1663,8 +1663,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Option A
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: cba98fb7b0d076241a627d1af1a174df, type: 2}
+  m_sharedMaterial: {fileID: 8333290374863783014, guid: cba98fb7b0d076241a627d1af1a174df, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1863,7 +1863,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 583885792}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.48, y: -8.74, z: 0}
+  m_LocalPosition: {x: -46.48, y: -6.16, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4007,7 +4007,7 @@ RectTransform:
   - {fileID: 1350418408}
   - {fileID: 1528592383}
   m_Father: {fileID: 1558438593}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -4508,9 +4508,9 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1945407620}
   - {fileID: 1784677590}
   - {fileID: 1383807716}
+  - {fileID: 1945407620}
   - {fileID: 478704401}
   m_Father: {fileID: 1890040765}
   m_RootOrder: 3
@@ -4603,7 +4603,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1558438593}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -5061,7 +5061,7 @@ RectTransform:
   - {fileID: 433617346}
   - {fileID: 1474235642}
   m_Father: {fileID: 1558438593}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -5118,7 +5118,7 @@ MonoBehaviour:
       - m_Target: {fileID: 1558438594}
         m_TargetAssemblyTypeName: DisplayMenu, Assembly-CSharp
         m_MethodName: RunInBackground
-        m_Mode: 1
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

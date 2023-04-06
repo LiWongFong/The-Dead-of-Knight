@@ -4,7 +4,15 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using ExtensionMethods;
+
+public enum Save
+{
+    Controls,
+    Place
+}
 
 public class DataManager : MonoBehaviour
 {
@@ -13,7 +21,10 @@ public class DataManager : MonoBehaviour
             
     private SaveData _save = null;
 
-    private static string DataFilePath;
+    private static string SaveFilePath;
+    private static string ControlFilePath;
+
+    private FullScreenMode[] _mode = {FullScreenMode.FullScreenWindow, FullScreenMode.MaximizedWindow, FullScreenMode.Windowed};
 
 
     private void Awake() {
@@ -26,10 +37,12 @@ public class DataManager : MonoBehaviour
             Destroy(gameObject);
         }    
 
-        DataFilePath = Path.Combine(Application.persistentDataPath, "Save.json");
+        SaveFilePath = Path.Combine(Application.persistentDataPath, "Save.json");
+        ControlFilePath = Path.Combine(Application.persistentDataPath, "Controls.json");
         Application.quitting += Quit;
 
         Application.runInBackground = Extensions.intToBool(PlayerPrefs.GetInt("RunInBackground", 0));
+        Screen.fullScreenMode = _mode[PlayerPrefs.GetInt("FullScreenMode", 2)];
     }
 
     public SaveData SaveFile {get => _save;}
@@ -45,7 +58,7 @@ public class DataManager : MonoBehaviour
     public void Save()
     {
         // This creates a new StreamWriter to write to a specific file path
-        using (StreamWriter writer = new StreamWriter(DataFilePath))
+        using (StreamWriter writer = new StreamWriter(SaveFilePath))
         {
             // This will convert our Data object into a string of JSON
             string dataToWrite = JsonUtility.ToJson(_save);
@@ -58,7 +71,7 @@ public class DataManager : MonoBehaviour
     public void Load()
     {
         // This creates a StreamReader, which allows us to read the data from the specified file path
-        using (StreamReader reader = new StreamReader(DataFilePath))
+        using (StreamReader reader = new StreamReader(SaveFilePath))
         {
             // We read in the file as a string
             string dataToLoad = reader.ReadToEnd();

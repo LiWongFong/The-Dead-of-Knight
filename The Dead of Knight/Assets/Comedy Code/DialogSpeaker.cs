@@ -27,6 +27,11 @@ public class DialogSpeaker : MonoBehaviour
         );
     }
 
+    private void Update() {
+        GetComponent<Animator>().SetBool("Talking", _speaking);
+        transform.GetChild(0).gameObject.GetComponent<Animator>().SetBool("Talking", _speaking);
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player")
@@ -54,6 +59,7 @@ public class DialogSpeaker : MonoBehaviour
         StartCoroutine(type(_lines[_line]));
         _line++;
         //make animations restart or smth i dont care
+        transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().enabled = true;
     }
 
     IEnumerator type(string text)
@@ -66,7 +72,13 @@ public class DialogSpeaker : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
         _speaking = false;
+        endBehavior();
         yield return new WaitForSeconds(1.5f);
         _tmp.text = "";
+    }
+
+    private void endBehavior()
+    {
+        transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().enabled = false;
     }
 }
