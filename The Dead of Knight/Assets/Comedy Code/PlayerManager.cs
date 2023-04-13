@@ -13,9 +13,10 @@ public class PlayerManager : MonoBehaviour
     public float MaxDashDistance = 4f;
     public float VerticalMomentum = 12f;
     public float HorizontalMomentum = 12f;
+    public float HobbleSpeed = 1f;
 
     [SerializeField]
-    private InputActionReference Jump, Pause, Joy, Position;
+    private InputActionReference Jump, Pause, Joy, Position, Hobble;
 
     [HideInInspector]
     public Vector2 StoredMomentum; 
@@ -25,6 +26,7 @@ public class PlayerManager : MonoBehaviour
     private bool _jump = false;
     private bool _reset = true;
     private bool _falling = false;
+    private bool _hobble = true;
     private float _startTime;
     private float _dashDistance;
     private bool _stuck = false;
@@ -150,9 +152,10 @@ public class PlayerManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_jump) 
+        if (_jump)
         {
             _jump = false;
+            _hobble = false;
             StartCoroutine(falling());
             StartCoroutine(dLine());
             Vector2 launch = _direction;
@@ -192,10 +195,17 @@ public class PlayerManager : MonoBehaviour
         {
             _reset = true;
             _falling = false;
+            _hobble = true;
             _anim.SetTrigger("Ground");
             _anim.ResetTrigger("Dash");
             //Debug.Log("Reset");
             _body.velocity = new Vector2(0,0);
+        }
+
+        if (!_clicked && _hobble && Hobble.action.ReadValue<Vector2>().x != 0)
+        {
+            _reset = false;
+            _body.velocity = Hobble.action.ReadValue<Vector2>() * HobbleSpeed;
         }
 
         _prevYVelocity = _body.velocity.y;
