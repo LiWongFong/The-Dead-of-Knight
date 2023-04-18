@@ -202,10 +202,10 @@ public class PlayerManager : MonoBehaviour
             _body.velocity = new Vector2(0,0);
         }
 
-        if (!_clicked && _hobble && Hobble.action.ReadValue<Vector2>().x != 0)
+        if (!_clicked && _hobble && Hobble.action.ReadValue<float>() != 0)
         {
             _reset = false;
-            _body.velocity = Hobble.action.ReadValue<Vector2>() * HobbleSpeed;
+            _body.velocity = new Vector2(Hobble.action.ReadValue<float>(), 0) * HobbleSpeed;
         }
 
         _prevYVelocity = _body.velocity.y;

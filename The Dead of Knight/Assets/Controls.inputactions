@@ -45,7 +45,7 @@
                     "name": "Hobble",
                     "type": "Value",
                     "id": "1fdc6c46-257d-4317-a910-cc28bc64163b",
-                    "expectedControlType": "Vector2",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -54,8 +54,8 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "e2bdde9d-b21e-4982-860d-03c751627245",
-                    "path": "<Keyboard>/space",
+                    "id": "4d48b7aa-9de2-4e5a-a06a-a22e15ad9f4c",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "KB&M",
@@ -65,19 +65,8 @@
                 },
                 {
                     "name": "",
-                    "id": "7b9cfb31-a371-4b17-b65e-162cf345a86a",
-                    "path": "<Gamepad>/buttonSouth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Sticks",
-                    "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "4d48b7aa-9de2-4e5a-a06a-a22e15ad9f4c",
-                    "path": "<Mouse>/leftButton",
+                    "id": "e2bdde9d-b21e-4982-860d-03c751627245",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "KB&M",
@@ -174,42 +163,20 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "D-Pad",
-                    "id": "26b3ae13-f1a3-4c4f-b774-77572cefe33c",
-                    "path": "2DVector",
+                    "name": "Keys",
+                    "id": "b5d1f0f0-8c5e-40ad-a134-e9cb6604bdff",
+                    "path": "1DAxis",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Hobble",
                     "isComposite": true,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "left",
-                    "id": "abf29830-043b-4f5b-a9e5-bebcd972b088",
-                    "path": "<Gamepad>/dpad/left",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Sticks",
-                    "action": "Hobble",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "6b001f4e-fb4a-48de-aae3-da7a022fce9b",
-                    "path": "<Gamepad>/dpad/right",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Sticks",
-                    "action": "Hobble",
-                    "isComposite": false,
-                    "isPartOfComposite": true
                 },
                 {
                     "name": "Keys alt",
                     "id": "c91de6e5-1c66-48d0-8dc6-c818210dbaac",
-                    "path": "2DVector",
+                    "path": "1DAxis",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -218,7 +185,7 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "left",
+                    "name": "Negative",
                     "id": "2cf54e7d-a6ac-436f-afc1-39fd52a4a713",
                     "path": "<Keyboard>/leftArrow",
                     "interactions": "",
@@ -229,20 +196,64 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "right",
-                    "id": "3c4d12aa-df20-4f95-922e-d2908f3a7003",
-                    "path": "<Keyboard>/rightArrow",
+                    "name": "Negative",
+                    "id": "abf29830-043b-4f5b-a9e5-bebcd972b088",
+                    "path": "<Gamepad>/dpad/left",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Sticks",
                     "action": "Hobble",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "Keys",
-                    "id": "b5d1f0f0-8c5e-40ad-a134-e9cb6604bdff",
-                    "path": "2DVector",
+                    "name": "Positive",
+                    "id": "6b001f4e-fb4a-48de-aae3-da7a022fce9b",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Sticks",
+                    "action": "Hobble",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Positive",
+                    "id": "3c4d12aa-df20-4f95-922e-d2908f3a7003",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KB&M",
+                    "action": "Hobble",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Negative",
+                    "id": "0f07a8fc-98e6-4e33-9e6b-e6533758adf7",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KB&M",
+                    "action": "Hobble",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Positive",
+                    "id": "8ee80d67-0f5a-4f3b-829d-339039586815",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KB&M",
+                    "action": "Hobble",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "D-Pad",
+                    "id": "26b3ae13-f1a3-4c4f-b774-77572cefe33c",
+                    "path": "1DAxis",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -251,26 +262,15 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "left",
-                    "id": "0f07a8fc-98e6-4e33-9e6b-e6533758adf7",
-                    "path": "<Keyboard>/a",
+                    "name": "",
+                    "id": "7b9cfb31-a371-4b17-b65e-162cf345a86a",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "Hobble",
+                    "groups": "Sticks",
+                    "action": "Jump",
                     "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "8ee80d67-0f5a-4f3b-829d-339039586815",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Hobble",
-                    "isComposite": false,
-                    "isPartOfComposite": true
+                    "isPartOfComposite": false
                 }
             ]
         },
