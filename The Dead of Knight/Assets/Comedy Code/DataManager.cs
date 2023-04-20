@@ -8,7 +8,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using ExtensionMethods;
 
-public enum Save
+public enum SaveType
 {
     Controls,
     Place
@@ -20,6 +20,8 @@ public class DataManager : MonoBehaviour
 
             
     private SaveData _save = null;
+
+    private string _con = null;
 
     private static string SaveFilePath;
     private static string ControlFilePath;
@@ -46,19 +48,21 @@ public class DataManager : MonoBehaviour
     }
 
     public SaveData SaveFile {get => _save;}
+    public string Contorls {get => _con; set => _con = value;}
     public string Level {get => _save.Level; set => _save.Level = value;}
     public Vector2 Position {get => _save.Position; set => _save.Position = value;}
     public Vector2 Velocity {get => _save.Velocity; set => _save.Velocity = value;}
 
     private void Start() {
-        try {Load();}
+        try {Load(SaveType.Place);}
         catch (FileNotFoundException e) {print(e);}
     }
 
-    public void Save()
+    public void Save(SaveType type)
     {
+        string path = type == SaveType.Place ? SaveFilePath : ControlFilePath;
         // This creates a new StreamWriter to write to a specific file path
-        using (StreamWriter writer = new StreamWriter(SaveFilePath))
+        using (StreamWriter writer = new StreamWriter(path))
         {
             // This will convert our Data object into a string of JSON
             string dataToWrite = JsonUtility.ToJson(_save);
@@ -68,10 +72,11 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    public void Load()
+    public void Load(SaveType type)
     {
+        string path = type == SaveType.Place ? SaveFilePath : ControlFilePath;
         // This creates a StreamReader, which allows us to read the data from the specified file path
-        using (StreamReader reader = new StreamReader(SaveFilePath))
+        using (StreamReader reader = new StreamReader(path))
         {
             // We read in the file as a string
             string dataToLoad = reader.ReadToEnd();
@@ -116,7 +121,8 @@ public class DataManager : MonoBehaviour
         {
             print(e);
         }
-        if (_save != null) {Save();}
+        if (_save != null) {Save(SaveType.Place);}
+        if (_con != null) {Save(SaveType.Controls);}
         Debug.Log(Time.time);
         Debug.Log(Time.time - t);
 

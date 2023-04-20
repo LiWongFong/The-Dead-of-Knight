@@ -22,15 +22,12 @@ public class StupidRebindEdgeCase : MonoBehaviour
         CM.Rebind(action,text,id,ID);
     }
 
-    public void EvenWorseEdgeCase()
-    {
-        CM.Rebind(action,text,id,ID);
-    }
-
     [ContextMenu("go fck huiorahtjnbsdkfgjhskdbgdfuiygsbxjfckl")]
-    public void test() {
-        print(action.action.bindings[id]);
-        var b = action.action.bindings[id];
-        print(InputActionRebindingExtensions.GetBindingIndex(action.action, b.groups, b.path));
+    public void test()
+    {
+        foreach (var item in action.action.bindings)
+        {
+            print(item);
+        }
     }
 }
