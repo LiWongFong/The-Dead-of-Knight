@@ -21,7 +21,7 @@ public class DataManager : MonoBehaviour
             
     private SaveData _save = null;
 
-    private string _con = null;
+    private string _con = "";
 
     private static string SaveFilePath;
     private static string ControlFilePath;
@@ -41,21 +41,23 @@ public class DataManager : MonoBehaviour
 
         SaveFilePath = Path.Combine(Application.persistentDataPath, "Save.json");
         ControlFilePath = Path.Combine(Application.persistentDataPath, "Controls.json");
-        Application.quitting += Quit;
 
         Application.runInBackground = Extensions.intToBool(PlayerPrefs.GetInt("RunInBackground", 0));
         Screen.fullScreenMode = _mode[PlayerPrefs.GetInt("FullScreenMode", 2)];
     }
 
     public SaveData SaveFile {get => _save;}
-    public string Contorls {get => _con; set => _con = value;}
+    public string Controls {get => _con; set => _con = value;}
     public string Level {get => _save.Level; set => _save.Level = value;}
     public Vector2 Position {get => _save.Position; set => _save.Position = value;}
     public Vector2 Velocity {get => _save.Velocity; set => _save.Velocity = value;}
 
     private void Start() {
         try {Load(SaveType.Place);}
-        catch (FileNotFoundException e) {print(e);}
+        catch (FileNotFoundException e) {print(e + "\nNo save found");}
+
+        try {Load(SaveType.Controls); print(_con);}
+        catch (FileNotFoundException e) {print(e + "\nNo rebinds found");}
     }
 
     public void Save(SaveType type)
@@ -64,8 +66,13 @@ public class DataManager : MonoBehaviour
         // This creates a new StreamWriter to write to a specific file path
         using (StreamWriter writer = new StreamWriter(path))
         {
+            string dataToWrite = string.Empty;
             // This will convert our Data object into a string of JSON
-            string dataToWrite = JsonUtility.ToJson(_save);
+            if (type == SaveType.Place)
+            {dataToWrite = JsonUtility.ToJson(_save);}
+            else
+            {dataToWrite = _con;}
+            
 
             // This is where we actually write to the file
             writer.Write(dataToWrite);
@@ -82,7 +89,10 @@ public class DataManager : MonoBehaviour
             string dataToLoad = reader.ReadToEnd();
 
             // Here we convert the JSON formatted string into an actual Object in memory
-            _save = JsonUtility.FromJson<SaveData>(dataToLoad);
+            if (type == SaveType.Place)
+            {_save = JsonUtility.FromJson<SaveData>(dataToLoad);}
+            else
+            {_con = dataToLoad;}
         }
     }
 
@@ -91,7 +101,7 @@ public class DataManager : MonoBehaviour
         _save = new SaveData("W11",new Vector2(-91.28f,-9.21f),new Vector2(0,0));
     }
 
-    private void Quit() {
+    private void OnApplicationQuit() {
         Debug.Log("Exit called");
         var t = Time.time;
         Debug.Log(t);

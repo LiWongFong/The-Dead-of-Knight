@@ -86,6 +86,8 @@ public class PlayerManager : MonoBehaviour
         _body.transform.position = DataManager.dManager.Position;
         _body.velocity = DataManager.dManager.Velocity;
         _anim.SetFloat("Facing", _body.velocity.x);
+
+        _input.actions.LoadBindingOverridesFromJson(DataManager.dManager.Controls); 
     }
 
     private void OnClick(InputAction.CallbackContext ctx)
@@ -353,4 +355,7 @@ public class PlayerManager : MonoBehaviour
         this.enabled = false;
     }
 
+    private void OnDestroy() {
+        DataManager.dManager.Controls = _input.actions.SaveBindingOverridesAsJson();
+    }
 }

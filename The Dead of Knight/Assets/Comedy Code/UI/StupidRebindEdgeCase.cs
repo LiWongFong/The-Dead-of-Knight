@@ -15,6 +15,10 @@ public class StupidRebindEdgeCase : MonoBehaviour
     [SerializeField]
     private int id;
 
+    private void Start() {
+        transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = InputControlPath.ToHumanReadableString(action.action.bindings[id].effectivePath,InputControlPath.HumanReadableStringOptions.OmitDevice);
+    }
+
     public void StupidEdgecase()
     {
         var b = action.action.bindings[id];
