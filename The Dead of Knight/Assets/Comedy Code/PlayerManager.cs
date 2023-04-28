@@ -33,6 +33,8 @@ public class PlayerManager : MonoBehaviour
     private Vector2 _direction;
     private float _prevYVelocity = 0;
 
+    private List<ContactPoint2D> points = new List<ContactPoint2D>();
+
 
     private Rigidbody2D _body;
 
@@ -193,7 +195,14 @@ public class PlayerManager : MonoBehaviour
             _body.velocity = (launch*new Vector2(HorizontalMomentum,VerticalMomentum));
         }
 
-        if (_body.velocity.y == 0f && _prevYVelocity == 0f && !_stuck)
+        if (_body.velocity.y == 0f && _prevYVelocity == 0f && points.Count == 1)
+        {
+            var cum = transform.position.x - points[0].point.x;
+            float normalizedCum = cum/MathF.Abs(cum);
+            _body.velocity += new Vector2(normalizedCum,0);
+        }
+
+        if (_body.velocity.y == 0f && _prevYVelocity == 0f && !_stuck && points.Count >= 2)
         {
             _reset = true;
             _falling = false;
@@ -208,6 +217,12 @@ public class PlayerManager : MonoBehaviour
         {
             _reset = false;
             _body.velocity = new Vector2(Hobble.action.ReadValue<float>(), 0) * HobbleSpeed;
+        }
+
+        if (!_body.IsTouching( new ContactFilter2D().NoFilter()))
+        {
+            _hobble = false;
+            _falling = true;
         }
 
         _prevYVelocity = _body.velocity.y;
@@ -355,7 +370,25 @@ public class PlayerManager : MonoBehaviour
         this.enabled = false;
     }
 
-    private void OnDestroy() {
+    private void OnDestroy()
+    {
         DataManager.dManager.Controls = _input.actions.SaveBindingOverridesAsJson();
+    }
+
+    private void OnCollisionStay2D(Collision2D other)
+    {
+        other.GetContacts(points);
+        foreach (var point in points)
+        {
+            var normal = point.normal*10;
+            Debug.DrawRay(point.point, normal, Color.red, 1f);
+        } 
+    }
+
+    [ContextMenu("jhgbakrthbkhsejdrkawreyhsgduawgerygiuk")]
+    private void test()
+    {
+        print(points.Count);
+        print(_body.velocity.y);
     }
 }
