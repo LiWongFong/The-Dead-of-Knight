@@ -11,8 +11,7 @@ public class PlayerManager : MonoBehaviour
 
     public float MaxChargeTime = 1f;
     public float MaxDashDistance = 4f;
-    public float VerticalMomentum = 12f;
-    public float HorizontalMomentum = 12f;
+    public Vector2 Momentum = new Vector2(12f,12f);
     public float HobbleSpeed = 1f;
 
     [SerializeField]
@@ -192,14 +191,14 @@ public class PlayerManager : MonoBehaviour
             }
             
             _body.MovePosition(blinkEnd);
-            _body.velocity = (launch*new Vector2(HorizontalMomentum,VerticalMomentum));
+            _body.velocity = (launch*Momentum);
         }
 
         if (_body.velocity.y == 0f && _prevYVelocity == 0f && points.Count == 1)
         {
-            var cum = transform.position.x - points[0].point.x;
-            float normalizedCum = cum/MathF.Abs(cum);
-            _body.velocity += new Vector2(normalizedCum,0);
+            var distanceFromPointToCenter = transform.position.x - points[0].point.x;
+            float normalizedDistanceFromPointToCenter = distanceFromPointToCenter/MathF.Abs(distanceFromPointToCenter);
+            _body.velocity += new Vector2(normalizedDistanceFromPointToCenter,0);
         }
 
         if (_body.velocity.y == 0f && _prevYVelocity == 0f && !_stuck && points.Count >= 2)
@@ -270,7 +269,10 @@ public class PlayerManager : MonoBehaviour
         Vector2 newLaunch = launch.Rotate(reflectAngle*2);
 
         RaycastHit2D rehit = Physics2D.Raycast(transform.position.AsVector2(), newLaunch, _dashDistance, ~_layermask);
+        Debug.DrawRay(transform.position, newLaunch*_dashDistance, Color.blue, 10f);
+
         Vector2 bounceEnd;
+        bool hitTransAfterWall = false;
         if (rehit.collider == null)
         {
             bounceEnd = transform.position.AsVector2()+(newLaunch*_dashDistance);
@@ -281,7 +283,7 @@ public class PlayerManager : MonoBehaviour
                 case "Trans":
                     bounceEnd = transform.position.AsVector2()+(newLaunch*rehit.distance);
                     StartCoroutine(trans(newLaunch, _dashDistance - rehit.distance));
-                    _stuck = true;
+                    hitTransAfterWall = true;
                     break;
                 default:
                     bounceEnd = transform.position.AsVector2()+(newLaunch*rehit.distance);
@@ -291,9 +293,9 @@ public class PlayerManager : MonoBehaviour
         }
 
         _body.MovePosition(bounceEnd);
-        _body.velocity = newLaunch*new Vector2(HorizontalMomentum,VerticalMomentum);
+        _body.velocity = (newLaunch*Momentum);
         yield return null;
-        _stuck = false;
+        if (!hitTransAfterWall) {_stuck = false;}
     }
 
     IEnumerator trans(Vector2 launch, float _distance)
@@ -303,10 +305,38 @@ public class PlayerManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         _body.constraints = RigidbodyConstraints2D.FreezeRotation;
 
-        _body.MovePosition(transform.position.AsVector2()+(launch*_distance));
-        _body.velocity = (launch*new Vector2(HorizontalMomentum,VerticalMomentum));
+        RaycastHit2D continuedJump = Physics2D.Raycast(transform.position.AsVector2(), launch, _distance, ~(_layermask^(1 << 7)));
+        Vector2 endPosition;
+        bool hitWallAfterTrans = false;
+        
+        print(continuedJump.collider);
+        Debug.DrawRay(transform.position, launch*_distance, Color.green, 10f);
+
+        if (continuedJump.collider == null)
+        {
+            endPosition = transform.position.AsVector2()+(launch*_distance);
+        } else
+        {
+            switch (continuedJump.collider.tag)
+            {
+                
+                case "Wall":
+                    endPosition = transform.position.AsVector2()+(launch*continuedJump.distance);
+                    hitWallAfterTrans = true;
+                    endPosition += (continuedJump.normal * collisionFix(endPosition,continuedJump.normal));
+                    break;  
+                default:
+                    endPosition = transform.position.AsVector2()+(launch*continuedJump.distance);
+                    endPosition += (continuedJump.normal * collisionFix(endPosition,continuedJump.normal));
+                    break;
+            }
+        }
+
+        _body.MovePosition(endPosition);
+        _body.velocity = (launch*Momentum);
         yield return null;
-        _stuck = false;
+        if (!hitWallAfterTrans) {_stuck = false;}
+        else {StartCoroutine(stick(launch, continuedJump.normal));}
     }
 
     IEnumerator frozen(Vector2 v)

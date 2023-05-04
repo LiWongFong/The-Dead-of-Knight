@@ -29,5 +29,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/W22.unity
     guid: 8e8950d0f650a764eaf99a7541397da1
+  - enabled: 1
+    path: Assets/Scenes/W23.unity
+    guid: 396e331c36b831641a04b8e189caba56
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 5b43e5df77c366a4fb6d09d7ca6fe889, type: 2}
