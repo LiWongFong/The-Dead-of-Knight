@@ -190,7 +190,10 @@ public class PlayerManager : MonoBehaviour
                 }
             }
             
+            print(_dashDistance);
+
             _body.MovePosition(blinkEnd);
+            print("Moved to: "+blinkEnd);
             _body.velocity = (launch*Momentum);
         }
 
@@ -258,7 +261,7 @@ public class PlayerManager : MonoBehaviour
 
     IEnumerator stick(Vector2 launch, Vector2 normal)
     {
-        yield return null;
+        yield return new WaitForFixedUpdate();
         Debug.Log("Stuck");
         _body.constraints = RigidbodyConstraints2D.FreezeAll;
         yield return new WaitForSeconds(0.5f);
@@ -270,6 +273,7 @@ public class PlayerManager : MonoBehaviour
 
         RaycastHit2D rehit = Physics2D.Raycast(transform.position.AsVector2(), newLaunch, _dashDistance, ~_layermask);
         Debug.DrawRay(transform.position, newLaunch*_dashDistance, Color.blue, 10f);
+        print(_dashDistance);
 
         Vector2 bounceEnd;
         bool hitTransAfterWall = false;
@@ -293,14 +297,15 @@ public class PlayerManager : MonoBehaviour
         }
 
         _body.MovePosition(bounceEnd);
+        print("Moved to: "+bounceEnd);
         _body.velocity = (newLaunch*Momentum);
-        yield return null;
+
         if (!hitTransAfterWall) {_stuck = false;}
     }
 
     IEnumerator trans(Vector2 launch, float _distance)
     {
-        yield return null;
+        yield return new WaitForFixedUpdate();
         _body.constraints = RigidbodyConstraints2D.FreezeAll;
         yield return new WaitForSeconds(0.5f);
         _body.constraints = RigidbodyConstraints2D.FreezeRotation;
@@ -322,6 +327,7 @@ public class PlayerManager : MonoBehaviour
                 
                 case "Wall":
                     endPosition = transform.position.AsVector2()+(launch*continuedJump.distance);
+                    StartCoroutine(stick(launch, continuedJump.normal));
                     hitWallAfterTrans = true;
                     endPosition += (continuedJump.normal * collisionFix(endPosition,continuedJump.normal));
                     break;  
@@ -333,10 +339,10 @@ public class PlayerManager : MonoBehaviour
         }
 
         _body.MovePosition(endPosition);
+        print("Moved to: "+endPosition);
         _body.velocity = (launch*Momentum);
-        yield return null;
+
         if (!hitWallAfterTrans) {_stuck = false;}
-        else {StartCoroutine(stick(launch, continuedJump.normal));}
     }
 
     IEnumerator frozen(Vector2 v)
