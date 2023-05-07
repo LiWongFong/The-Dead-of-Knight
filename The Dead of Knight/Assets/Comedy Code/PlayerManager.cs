@@ -164,6 +164,7 @@ public class PlayerManager : MonoBehaviour
             Vector2 launch = _direction;
             launch.Normalize();
             RaycastHit2D hit = Physics2D.Raycast(transform.position.AsVector2(), launch, _dashDistance, ~_layermask);
+            Debug.DrawRay(transform.position, launch*_dashDistance, Color.magenta, 10f);
             Vector2 blinkEnd;
             if (hit.collider == null)
             {
