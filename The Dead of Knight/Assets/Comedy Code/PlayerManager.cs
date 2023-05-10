@@ -32,7 +32,8 @@ public class PlayerManager : MonoBehaviour
     private Vector2 _direction;
     private float _prevYVelocity = 0;
 
-    private List<ContactPoint2D> points = new List<ContactPoint2D>();
+    private List<ContactPoint2D> _points = new List<ContactPoint2D>();
+    private ContactFilter2D _filter= new ContactFilter2D().NoFilter();
 
 
     private Rigidbody2D _body;
@@ -79,10 +80,13 @@ public class PlayerManager : MonoBehaviour
         _indi = GameObject.Find("Indicator").GetComponent<Indicator>();
         _sword = transform.GetChild(1).gameObject;
         _input = GetComponent<PlayerInput>();
+
         int playerLayer = 1 << gameObject.layer;
         int defaultLayer = 1 << 2;
         int edgecase = 1 << 6;
         _layermask = defaultLayer ^ playerLayer ^ edgecase;
+
+        _filter.useTriggers = false;
 
         _body.transform.position = DataManager.dManager.Position;
         _body.velocity = DataManager.dManager.Velocity;
@@ -198,14 +202,14 @@ public class PlayerManager : MonoBehaviour
             _body.velocity = (launch*Momentum);
         }
 
-        if (_body.velocity.y == 0f && _prevYVelocity == 0f && points.Count == 1)
+        if (_body.velocity.y == 0f && _prevYVelocity == 0f && _points.Count == 1)
         {
-            var distanceFromPointToCenter = transform.position.x - points[0].point.x;
+            var distanceFromPointToCenter = transform.position.x - _points[0].point.x;
             float normalizedDistanceFromPointToCenter = distanceFromPointToCenter/MathF.Abs(distanceFromPointToCenter);
             _body.velocity += new Vector2(normalizedDistanceFromPointToCenter,0);
         }
 
-        if (_body.velocity.y == 0f && _prevYVelocity == 0f && !_stuck && points.Count >= 2)
+        if (_body.velocity.y == 0f && _prevYVelocity == 0f && !_stuck && _points.Count >= 2)
         {
             _reset = true;
             _falling = false;
@@ -222,7 +226,7 @@ public class PlayerManager : MonoBehaviour
             _body.velocity = new Vector2(Hobble.action.ReadValue<float>(), 0) * HobbleSpeed;
         }
 
-        if (!_body.IsTouching( new ContactFilter2D().NoFilter()))
+        if (!_body.IsTouching(_filter))
         {
             _hobble = false;
             _falling = true;
@@ -414,8 +418,8 @@ public class PlayerManager : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D other)
     {
-        other.GetContacts(points);
-        foreach (var point in points)
+        other.GetContacts(_points);
+        foreach (var point in _points)
         {
             var normal = point.normal*10;
             Debug.DrawRay(point.point, normal, Color.red, 1f);
@@ -425,7 +429,7 @@ public class PlayerManager : MonoBehaviour
     [ContextMenu("jhgbakrthbkhsejdrkawreyhsgduawgerygiuk")]
     private void test()
     {
-        print(points.Count);
+        print(_points.Count);
         print(_body.velocity.y);
     }
 }
