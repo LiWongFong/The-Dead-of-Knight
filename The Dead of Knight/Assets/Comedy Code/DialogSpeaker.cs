@@ -4,22 +4,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class DialogSpeaker : MonoBehaviour
+public abstract class DialogSpeaker : MonoBehaviour
 {
     [SerializeField]
-    private TextAsset Dialog;
+    protected TextAsset Dialog;
 
     [SerializeField]
-    private TextMeshProUGUI _tmp;
+    protected TextMeshProUGUI _tmp;
 
-    private bool _stay = false;
+    protected bool _stay = false;
     
-    private string[] _lines;
-    private string display;
-    private int _line = 0;
-    private bool _speaking = false;
+    protected string[] _lines;
+    protected string display;
+    protected int _line = 0;
+    protected bool _speaking = false;
 
-    private void Start()
+    protected void Start()
     {
         _lines = Dialog.text.Split(
         new string[] { "\r\n", "\r", "\n" },
@@ -27,12 +27,7 @@ public class DialogSpeaker : MonoBehaviour
         );
     }
 
-    private void Update() {
-        GetComponent<Animator>().SetBool("Talking", _speaking);
-        transform.GetChild(0).gameObject.GetComponent<Animator>().SetBool("Talking", _speaking);
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
+    protected void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player")
         {
@@ -41,31 +36,28 @@ public class DialogSpeaker : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other) {
+    protected void OnTriggerExit2D(Collider2D other) {
         if (other.tag == "Player")
         {
             _stay = false;
         } 
     }
 
-    IEnumerator waitCheck()
+    protected IEnumerator waitCheck()
     {
         yield return new WaitForSeconds(1);
         if (_stay && !_speaking) {speak();}
     }
 
-    private void speak()
+    protected virtual void speak()
     {
         StartCoroutine(type(_lines[_line]));
-        _line++;
-        //make animations restart or smth i dont care
-        transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().enabled = true;
     }
 
-    IEnumerator type(string text)
+    protected virtual IEnumerator type(string text, float timeToClear = 1.5f)
     {
         _speaking = true;
-        for (int i = 0; i < text.Length; i++)
+        for (int i = 0; i < text.Length+1; i++)
         {
             display = text.Substring(0,i);
             _tmp.text = display;
@@ -73,12 +65,9 @@ public class DialogSpeaker : MonoBehaviour
         }
         _speaking = false;
         endBehavior();
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(timeToClear);
         _tmp.text = "";
     }
 
-    private void endBehavior()
-    {
-        transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().enabled = false;
-    }
+    protected abstract void endBehavior();
 }

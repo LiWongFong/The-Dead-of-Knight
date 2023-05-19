@@ -276,15 +276,15 @@ public class PlayerManager : MonoBehaviour
         float reflectAngle = Vector2.SignedAngle(launch,antiNormal);
         Vector2 newLaunch = launch.Rotate(reflectAngle*2);
 
-        RaycastHit2D rehit = Physics2D.Raycast(transform.position.AsVector2(), newLaunch, _dashDistance, ~_layermask);
-        Debug.DrawRay(transform.position, newLaunch*_dashDistance, Color.blue, 10f);
-        print(_dashDistance);
+        RaycastHit2D rehit = Physics2D.Raycast(transform.position.AsVector2(), newLaunch, _dashDistance/2, ~_layermask);
+        Debug.DrawRay(transform.position, newLaunch*_dashDistance/2, Color.blue, 10f);
+        print(_dashDistance/2);
 
         Vector2 bounceEnd;
         bool hitTransAfterWall = false;
         if (rehit.collider == null)
         {
-            bounceEnd = transform.position.AsVector2()+(newLaunch*_dashDistance);
+            bounceEnd = transform.position.AsVector2()+(newLaunch*_dashDistance/2);
         } else
         {
             switch (rehit.collider.tag)
