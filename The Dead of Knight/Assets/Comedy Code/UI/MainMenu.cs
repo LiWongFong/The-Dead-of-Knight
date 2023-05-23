@@ -37,9 +37,7 @@ public class MainMenu : MonoBehaviour
         if (DataManager.dManager.SaveFile == null)
         {
             DataManager.dManager.Overwrite();
-            SceneManager.LoadScene(DataManager.dManager.Level);
-            StartCoroutine(LoadEternals());
-            SceneManager.UnloadSceneAsync("Main Menu");  
+            StartCoroutine(LoadGame());
         } 
         else
         {
@@ -50,9 +48,7 @@ public class MainMenu : MonoBehaviour
 
     public void Continue()
     {
-        SceneManager.LoadScene(DataManager.dManager.Level);
-        StartCoroutine(LoadEternals());
-        SceneManager.UnloadSceneAsync("Main Menu");  
+        StartCoroutine(LoadGame());
     }
 
     private void OnEnable() {
@@ -86,10 +82,35 @@ public class MainMenu : MonoBehaviour
         _event.SetSelectedGameObject(_lastSelected, new BaseEventData(_event));
     }
 
-    IEnumerator LoadEternals()
+    IEnumerator LoadGame()
     {
+        var img = GameObject.Find("Black Screen").GetComponent<Image>();
+        float a = 0;
+        for (float i = 0; i < 0.69; i += 0.023f)
+        {
+            //0
+            //30
+            //0.03225806451
+            var tempColor = img.color;
+            a += 0.03225806451f;
+            tempColor.a = a;
+            img.color = tempColor;
+
+            yield return new WaitForSeconds(0.023f);
+        }
+
+        SceneManager.LoadScene(DataManager.dManager.Level);
         SceneManager.LoadScene("Eternals", LoadSceneMode.Additive);
         yield return null;
         SceneManager.SetActiveScene(SceneManager.GetSceneByName("Eternals"));
+        yield return null;
+        SceneManager.UnloadSceneAsync("Main Menu");  
+
+        #if UNITY_STANDALONE
+            Cursor.visible = false;
+        #endif
+        #if UNITY_EDITOR
+            Cursor.visible = true;
+        #endif
     }
 }

@@ -12,6 +12,10 @@ public class PauseMenu : MonoBehaviour
     {
         _dim.SetActive(true);
         _core.SetActive(true);
+
+        #if UNITY_STANDALONE
+            Cursor.visible = true;
+        #endif
     }
 
     public void UnPause()
@@ -23,5 +27,12 @@ public class PauseMenu : MonoBehaviour
         PlayerManager.Player.enabled = true;
         PlayerManager.Player.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
         PlayerManager.Player.gameObject.GetComponent<Rigidbody2D>().velocity = PlayerManager.Player.StoredMomentum;
+
+        #if UNITY_STANDALONE
+            Cursor.visible = false;
+        #endif
+        #if UNITY_EDITOR
+            Cursor.visible = true;
+        #endif
     }
 }

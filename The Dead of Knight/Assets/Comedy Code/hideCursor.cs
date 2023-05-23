@@ -8,5 +8,8 @@ public class hideCursor : MonoBehaviour
         #if UNITY_STANDALONE
             Cursor.visible = false;
         #endif
+        #if UNITY_EDITOR
+            Cursor.visible = true;
+        #endif
     }
 }
