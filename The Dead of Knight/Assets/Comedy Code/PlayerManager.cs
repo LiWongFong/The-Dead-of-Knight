@@ -31,6 +31,7 @@ public class PlayerManager : MonoBehaviour
     private bool _stuck = false;
     private Vector2 _direction;
     private float _prevYVelocity = 0;
+    private bool IsAnimationReset = true;
 
     private List<ContactPoint2D> _points = new List<ContactPoint2D>();
     private ContactFilter2D _filter= new ContactFilter2D().NoFilter();
@@ -116,6 +117,7 @@ public class PlayerManager : MonoBehaviour
             _anim.ResetTrigger("Charging");
             _anim.SetTrigger("Dash");
             _anim.ResetTrigger("Ground");
+            IsAnimationReset = false;
 
             _sword.SetActive(false);
             _sword.GetComponent<Animator>().ResetTrigger("Shine");
@@ -209,7 +211,7 @@ public class PlayerManager : MonoBehaviour
             _body.velocity += new Vector2(normalizedDistanceFromPointToCenter,0);
         }
 
-        if (_body.velocity.y == 0f && _prevYVelocity == 0f && !_stuck && _points.Count >= 2)
+        if (_body.velocity.y == 0f && _prevYVelocity == 0f && !_stuck && _points.Count >= 2 && IsAnimationReset)
         {
             _reset = true;
             _falling = false;
@@ -272,6 +274,8 @@ public class PlayerManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         _body.constraints = RigidbodyConstraints2D.FreezeRotation;
 
+        StartCoroutine(dLine());
+
         Vector2 antiNormal = normal.Rotate(90);
         float reflectAngle = Vector2.SignedAngle(launch,antiNormal);
         Vector2 newLaunch = launch.Rotate(reflectAngle*2);
@@ -314,6 +318,8 @@ public class PlayerManager : MonoBehaviour
         _body.constraints = RigidbodyConstraints2D.FreezeAll;
         yield return new WaitForSeconds(0.5f);
         _body.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+        StartCoroutine(dLine());
 
         RaycastHit2D continuedJump = Physics2D.Raycast(transform.position.AsVector2(), launch, _distance, ~(_layermask^(1 << 7)));
         Vector2 endPosition;
@@ -400,6 +406,8 @@ public class PlayerManager : MonoBehaviour
     {
         return _falling;
     }
+
+    public void AnimFinished() {IsAnimationReset = true;}
     private void OnPause()
     {
         StoredMomentum = _body.velocity;
@@ -429,7 +437,6 @@ public class PlayerManager : MonoBehaviour
     [ContextMenu("jhgbakrthbkhsejdrkawreyhsgduawgerygiuk")]
     private void test()
     {
-        print(_points.Count);
-        print(_body.velocity.y);
+        print(IsAnimationReset);
     }
 }

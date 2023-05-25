@@ -24,12 +24,7 @@ public class MainMenu : MonoBehaviour
 
     public void Quit()
     {
-        #if UNITY_STANDALONE
-            Application.Quit();
-        #endif
-        #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-        #endif
+        StartCoroutine(CloseGame());
     }
 
     public void NewGame()
@@ -111,6 +106,31 @@ public class MainMenu : MonoBehaviour
         #endif
         #if UNITY_EDITOR
             Cursor.visible = true;
+        #endif
+    }
+
+    IEnumerator CloseGame()
+    {
+        var img = GameObject.Find("Black Screen").GetComponent<Image>();
+        float a = 0;
+        for (float i = 0; i < 0.69; i += 0.023f)
+        {
+            //0
+            //30
+            //0.03225806451
+            var tempColor = img.color;
+            a += 0.03225806451f;
+            tempColor.a = a;
+            img.color = tempColor;
+
+            yield return new WaitForSeconds(0.023f);
+        }  
+
+        #if UNITY_STANDALONE
+            Application.Quit();
+        #endif
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
         #endif
     }
 }
