@@ -5,10 +5,19 @@ using UnityEngine;
 
 public class JadeSpeaker : DialogSpeaker
 {
+    [SerializeField]
+    private AudioClip[] Noises;
+
     private bool saidIntro = false;
     private bool solvedRiddle = false;
     private int timesTalkedTo = 3;
+
     private System.Random rnd = new System.Random();
+    private AudioSource _audio;
+
+    private void Awake() {
+        _audio = GetComponent<AudioSource>();
+    }
 
     protected void Update() {
         GetComponent<Animator>().SetBool("Talking", _speaking);
@@ -61,6 +70,8 @@ public class JadeSpeaker : DialogSpeaker
             {
                 display = text[startingLine+i].Substring(0,j);
                 _tmp.text = display;
+
+                _audio.PlayOneShot(Noises[rnd.Next(0,7)]);
                 yield return new WaitForSeconds(0.1f);
             }
             yield return new WaitForSeconds(0.5f);

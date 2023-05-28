@@ -23,7 +23,7 @@ public class PlayerManager : MonoBehaviour
     private int _layermask;
     private bool _clicked = false;
     private bool _jump = false;
-    private bool _reset = true;
+    private bool _reset = false;
     private bool _falling = false;
     private bool _hobble = true;
     private float _startTime;
@@ -48,6 +48,8 @@ public class PlayerManager : MonoBehaviour
     private GameObject _sword;
 
     private PlayerInput _input;
+
+    public Vector2 Velocity {get => _body.velocity; set => _body.velocity = value;}
 
     private void Awake() {
         if (Player ==  null)

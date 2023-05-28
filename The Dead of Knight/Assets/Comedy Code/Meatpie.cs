@@ -9,6 +9,8 @@ public class Meatpie : DialogSpeaker
     private float _swimSpeed;
     [SerializeField]
     private Transform[] children;
+    [SerializeField]
+    private AudioClip[] Noises;
 
     private Vector2 _start;
     private Vector2 _end;
@@ -19,6 +21,7 @@ public class Meatpie : DialogSpeaker
     private float _timer = 0f;
 
     private Animator _anim;
+    private AudioSource _audio;
 
     private void Awake() {
         foreach (var child in children)
@@ -33,6 +36,7 @@ public class Meatpie : DialogSpeaker
         _target.y += (Random.Range(-100,100)/200f);
 
         _anim = GetComponent<Animator>();
+        _audio = GetComponent<AudioSource>();
     }
 
     private void Update() {
@@ -98,6 +102,7 @@ public class Meatpie : DialogSpeaker
         {
             display = text.Substring(0,i);
             _tmp.text = display;
+            _audio.PlayOneShot(Noises[Random.Range(0,4)]);
             yield return new WaitForSeconds(0.1f);
         }
 

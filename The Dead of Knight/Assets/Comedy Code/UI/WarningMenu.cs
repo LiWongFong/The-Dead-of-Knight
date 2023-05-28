@@ -9,6 +9,8 @@ public class WarningMenu : MonoBehaviour
 {
     [SerializeField]
     private GameObject _default;
+    [SerializeField]
+    private AudioSource _audio;
 
     private EventSystem _event;
 
@@ -53,6 +55,8 @@ public class WarningMenu : MonoBehaviour
             //0.03225806451
             var tempColor = img.color;
             a += 0.03225806451f;
+
+            _audio.volume = 1-a;
             tempColor.a = a;
             img.color = tempColor;
 

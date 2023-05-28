@@ -582,7 +582,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -509.31293, y: -86.74231}
+  m_AnchoredPosition: {x: -509.31293, y: 46.1}
   m_SizeDelta: {x: 638.0903, y: 121.2372}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &701523082
@@ -828,7 +828,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: e54f6382b23a3ad40a0f28b05439f38d, type: 3}
+  m_audioClip: {fileID: 8300000, guid: d6efe46c753250241b18c2a39046683c, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -1010,6 +1010,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _default: {fileID: 1624804551}
+  _audio: {fileID: 729358060}
 --- !u!1 &926071672
 GameObject:
   m_ObjectHideFlags: 0
@@ -1123,7 +1124,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -471.032, y: 46.061714}
+  m_AnchoredPosition: {x: -471.032, y: -86.74231}
   m_SizeDelta: {x: 714.6612, y: 121.2372}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &985731766
@@ -1500,7 +1501,7 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: Keyboard&Mouse
+  m_DefaultControlScheme: 
   m_DefaultActionMap: UI
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
@@ -1516,7 +1517,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: def936980c6c6fc418fbd501cf88054d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _default: {fileID: 701523079}
+  _default: {fileID: 985731764}
 --- !u!1 &1123263242
 GameObject:
   m_ObjectHideFlags: 0
@@ -1753,6 +1754,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _default: {fileID: 985731764}
   _warning: {fileID: 914614648}
+  _audio: {fileID: 729358060}
 --- !u!1 &1617822617
 GameObject:
   m_ObjectHideFlags: 0
