@@ -19,6 +19,7 @@ public class Meatpie : DialogSpeaker
     private bool turning = false;
     private float turnTime = 0.8333f;
     private float _timer = 0f;
+    private bool saidIntro = false;
 
     private Animator _anim;
     private AudioSource _audio;
@@ -39,7 +40,7 @@ public class Meatpie : DialogSpeaker
         _audio = GetComponent<AudioSource>();
     }
 
-    private void Update() {
+    private void FixedUpdate() {
         if (!turning && !_speaking)
         {
             transform.position = Vector2.MoveTowards(transform.position.AsVector2(), _target, _swimSpeed);
@@ -67,7 +68,35 @@ public class Meatpie : DialogSpeaker
         }
     }
 
-    protected override IEnumerator type(string text, float timeToClear = 1.5F)
+    protected override void speak()
+    {
+        if (!saidIntro)
+        {
+            StartCoroutine(type(_lines,0,3));
+            saidIntro = true;
+        } else
+        {
+            switch (Random.Range(1,4))
+                {
+                    case 1:
+                        StartCoroutine(type(_lines,4,1));
+                        break;
+                    case 2:
+                        StartCoroutine(type(_lines,6,1));
+                        break;
+                    case 3:
+                        StartCoroutine(type(_lines,8,1));
+                        break;
+                    case 4:
+                        StartCoroutine(type(_lines,10,1));
+                        break;
+                    default:
+                        break;
+                }
+        }
+    }
+
+    protected IEnumerator type(string[] text, int startingLine, int lineAmount, float timeToClear = 1.5F)
     {
         _speaking = true;
 
@@ -98,12 +127,18 @@ public class Meatpie : DialogSpeaker
         _anim.SetFloat("Facing Left", facing);
         _anim.SetBool("Speaking", true);
 
-        for (int i = 0; i < text.Length+1; i++)
+        //Speaking part
+        for (int i = 0; i < lineAmount; i++)
         {
-            display = text.Substring(0,i);
-            _tmp.text = display;
-            _audio.PlayOneShot(Noises[Random.Range(0,4)]);
-            yield return new WaitForSeconds(0.1f);
+            for (int j = 0; j < text[startingLine+i].Length+1; j++)
+            {
+                display = text[startingLine+i].Substring(0,j);
+                _tmp.text = display;
+
+                _audio.PlayOneShot(Noises[Random.Range(0,4)]);
+                yield return new WaitForSeconds(0.1f);
+            }
+            yield return new WaitForSeconds(0.5f);
         }
 
         _anim.SetBool("Speaking", false);
@@ -129,8 +164,5 @@ public class Meatpie : DialogSpeaker
         _tmp.text = "";
     }
 
-    protected override void endBehavior()
-    {
-        throw new System.NotImplementedException();
-    }
+    protected override void endBehavior() {}
 }

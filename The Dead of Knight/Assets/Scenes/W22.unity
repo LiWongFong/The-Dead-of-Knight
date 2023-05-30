@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 49349477}
   - component: {fileID: 49349476}
   - component: {fileID: 49349479}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: World_2-2_Hole-Cover
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -532,7 +532,7 @@ GameObject:
   - component: {fileID: 1151021785}
   - component: {fileID: 1151021784}
   - component: {fileID: 1151021787}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: World_2-2_Secret-Cover
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -660,7 +660,7 @@ GameObject:
   - component: {fileID: 1412858059}
   m_Layer: 0
   m_Name: World_2-2_FG
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

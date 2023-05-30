@@ -63,18 +63,18 @@ public class WarningMenu : MonoBehaviour
             yield return new WaitForSeconds(0.023f);
         }
 
-        SceneManager.LoadScene(DataManager.dManager.Level);
-        SceneManager.LoadScene("Eternals", LoadSceneMode.Additive);
-        yield return null;
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName("Eternals"));
-        yield return null;
-        SceneManager.UnloadSceneAsync("Main Menu");  
-
         #if UNITY_STANDALONE
             Cursor.visible = false;
         #endif
         #if UNITY_EDITOR
             Cursor.visible = true;
         #endif
+
+        SceneManager.LoadScene(DataManager.dManager.Level);
+        SceneManager.LoadScene("Eternals", LoadSceneMode.Additive);
+        yield return null;
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName("Eternals"));
+        yield return null;
+        SceneManager.UnloadSceneAsync("Main Menu");  
     }
 }

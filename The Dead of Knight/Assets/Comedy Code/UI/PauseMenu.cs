@@ -13,9 +13,7 @@ public class PauseMenu : MonoBehaviour
         _dim.SetActive(true);
         _core.SetActive(true);
 
-        #if UNITY_STANDALONE
-            Cursor.visible = true;
-        #endif
+        Cursor.visible = true;
     }
 
     public void UnPause()

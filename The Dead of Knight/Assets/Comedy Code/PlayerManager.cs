@@ -116,9 +116,11 @@ public class PlayerManager : MonoBehaviour
     {
         _startTime = Time.time;
         _clicked = true;
+        print("Left Pressed");
     }
 
-    private void OnRelease(InputAction.CallbackContext ctx) {preJump();}
+    private void OnRelease(InputAction.CallbackContext ctx) {
+        print("Left let go");preJump();}
 
     private void preJump()
     {
@@ -231,7 +233,7 @@ public class PlayerManager : MonoBehaviour
 
         if (_body.velocity.y == 0f && _prevYVelocity == 0f && !_stuck && _points.Count >= 2 && IsAnimationReset)
         {
-            if (!_reset) {_audio.PlayOneShot(SFX[1]);}
+            if (!_reset && Hobble.action.ReadValue<float>() == 0) {_audio.PlayOneShot(SFX[1]);}
             _reset = true;
             _falling = false;
             _hobble = true;
@@ -457,6 +459,9 @@ public class PlayerManager : MonoBehaviour
     [ContextMenu("jhgbakrthbkhsejdrkawreyhsgduawgerygiuk")]
     private void test()
     {
+        print(_reset);
+        print(_clicked);
+        print(_points.Count);
         print(IsAnimationReset);
     }
 }
