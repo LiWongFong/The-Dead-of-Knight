@@ -14,8 +14,18 @@ public class PlayerManager : MonoBehaviour
     public Vector2 Momentum = new Vector2(12f,12f);
     public float HobbleSpeed = 1f;
 
+    [Header("Control Things")]
     [SerializeField]
-    private InputActionReference Jump, Pause, Joy, Position, Hobble;
+    private InputActionReference Jump;
+    [SerializeField]
+    private InputActionReference Joy;
+    [SerializeField]
+    private InputActionReference Position;
+    [SerializeField]
+    private InputActionReference Hobble;
+
+    [SerializeField]
+    private AudioClip[] SFX;
 
     [HideInInspector]
     public Vector2 StoredMomentum; 
@@ -49,7 +59,10 @@ public class PlayerManager : MonoBehaviour
 
     private PlayerInput _input;
 
+    private AudioSource _audio;
+
     public Vector2 Velocity {get => _body.velocity; set => _body.velocity = value;}
+
 
     private void Awake() {
         if (Player ==  null)
@@ -83,6 +96,7 @@ public class PlayerManager : MonoBehaviour
         _indi = GameObject.Find("Indicator").GetComponent<Indicator>();
         _sword = transform.GetChild(1).gameObject;
         _input = GetComponent<PlayerInput>();
+        _audio = GetComponent<AudioSource>();
 
         int playerLayer = 1 << gameObject.layer;
         int defaultLayer = 1 << 2;
@@ -204,6 +218,8 @@ public class PlayerManager : MonoBehaviour
             _body.MovePosition(blinkEnd);
             print("Moved to: "+blinkEnd);
             _body.velocity = (launch*Momentum);
+
+            _audio.PlayOneShot(SFX[0]);
         }
 
         if (_body.velocity.y == 0f && _prevYVelocity == 0f && _points.Count == 1)
@@ -215,6 +231,7 @@ public class PlayerManager : MonoBehaviour
 
         if (_body.velocity.y == 0f && _prevYVelocity == 0f && !_stuck && _points.Count >= 2 && IsAnimationReset)
         {
+            if (!_reset) {_audio.PlayOneShot(SFX[1]);}
             _reset = true;
             _falling = false;
             _hobble = true;
@@ -222,6 +239,7 @@ public class PlayerManager : MonoBehaviour
             _anim.ResetTrigger("Dash");
             //Debug.Log("Reset");
             _body.velocity = new Vector2(0,0);
+            
         }
 
         if (!_clicked && _hobble && Hobble.action.ReadValue<float>() != 0)

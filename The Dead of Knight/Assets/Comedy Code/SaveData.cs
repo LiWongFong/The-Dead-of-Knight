@@ -66,7 +66,6 @@ public class SaveData : IEquatable<SaveData>
     {
         // TODO: write your implementation of GetHashCode() here
         throw new System.NotImplementedException();
-        return base.GetHashCode();
     }
 
     public static bool operator == (SaveData save1, SaveData save2)
